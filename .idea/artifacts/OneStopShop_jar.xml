@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="OneStopShop:jar">
+    <output-path>$USER_HOME$/Desktop/Minecraft Servers/1.12.2/plugins</output-path>
+    <root id="archive" name="OneStopShop.jar">
+      <element id="module-output" name="OneStopShop" />
+    </root>
+  </artifact>
+</component>

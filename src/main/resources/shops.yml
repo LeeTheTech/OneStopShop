@@ -1,0 +1,173 @@
+shops:
+  redstone-shop:
+    items:
+      '1':
+        material: REDSTONE
+        buy: 100.0
+        sell: 20.0
+  mineral-shop:
+    items:
+      '1':
+        material: DIAMOND
+        buy: 100.0
+        sell: 20.0
+  tool-shop:
+    items:
+      '1':
+        material: DIAMOND_PICKAXE
+        buy: 100.0
+        sell: 20.0
+  armor-shop:
+    items:
+      '1':
+        material: DIAMOND_CHESTPLATE
+        buy: 100.0
+        sell: 20.0
+      '2':
+        buy: 300.0
+        sell: 10.0
+        material: LEATHER_CHESTPLATE
+        color: 243, 139, 170
+  food-shop:
+    items:
+      '1':
+        material: GOLDEN_APPLE
+        buy: 100.0
+        sell: 20.0
+      '2':
+        material: CAKE
+        buy: 100.0
+        sell: 20.0
+  dye-shop:
+    items:
+      '1':
+        material: BLUE_DYE
+        buy: 100.0
+        sell: 20.0
+      '2':
+        material: YELLOW_DYE
+        buy: 100.0
+        sell: 20.0
+      '3':
+        material: GREEN_DYE
+        buy: 100.0
+        sell: 20.0
+  wood-shop:
+    items:
+      '1':
+        material: OAK_LOG
+        buy: 100.0
+        sell: 20.0
+  potion-shop:
+    items:
+      '1':
+        material: POTION
+        base-effect: INSTANT_HEAL, false, false
+        #1.8 ONLY
+        level: 1
+        buy: 100.0
+        sell: 20.0
+  enchantment-shop:
+    items:
+      '1':
+        material: ENCHANTED_BOOK
+        stored-enchants:
+          PROTECTION_FALL: 3
+        buy: 100.0
+        sell: 20.0
+  mob-drop-shop:
+    items:
+      '1':
+        material: STRING
+        buy: 100.0
+        sell: 20.0
+  block-shop:
+    items:
+      '1':
+        material: GRASS_BLOCK
+        buy: 100.0
+        sell: 20.0
+  banner-shop:
+    items:
+      '1':
+        buy: 500.0
+        sell: 20.0
+        material: ORANGE_BANNER
+        patterns:
+          STRIPE_SMALL: MAGENTA
+  weapon-shop:
+    items:
+      '1':
+        buy: 500.0
+        sell: 100.0
+        name: '&6&lEpic Sword'
+        lore:
+          - '&bThis sword was crafted'
+          - '&bby the gods of Minecraft.'
+        material: GOLDEN_SWORD
+        enchants:
+          LOOT_BONUS_MOBS: 3
+          DAMAGE_ALL: 5
+      '2':
+        buy: 1000.0
+        sell: 10.0
+        material: DIAMOND_SWORD
+  end-shop:
+    items:
+      '1':
+        buy: 100.0
+        sell: 20.0
+        material: END_STONE
+  firework-shop:
+    items:
+      '1':
+        buy: 200.0
+        sell: 20.0
+        name: '&aCreeper Rocket'
+        material: FIREWORK_ROCKET
+        power: 2
+        firework:
+          '1':
+            type: BALL_LARGE
+            flicker: true
+            trail: false
+            base-colors:
+              - 59, 81, 26
+              - 65, 205, 52
+            fade-colors:
+              - 59, 81, 26
+          '2':
+            type: CREEPER
+            flicker: false
+            trail: true
+            base-colors:
+              - 65, 205, 52
+            fade-colors:
+              - 65, 205, 52
+  nether-shop:
+    items:
+      '1':
+        buy: 350.0
+        sell: 10.0
+        material: NETHER_BRICKS
+  spawner-shop:
+    items:
+      '1':
+        buy: 1000.0
+        sell: 100000.0
+        name: '&fCow Spawner'
+        material: SPAWNER
+        mob: COW
+  test-shop:
+    items:
+      '1':
+        material: DIRT
+        buy: 100.0
+        sell: 20.0
+  head-shop:
+    items:
+      '1':
+        material: PLAYER_HEAD
+        skull: ewogICJ0aW1lc3RhbXAiIDogMTYwMzY5MTkyNTAyMSwKICAicHJvZmlsZUlkIiA6ICIwNjlhNzlmNDQ0ZTk0NzI2YTViZWZjYTkwZTM4YWFmNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJOb3RjaCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8yOTIwMDlhNDkyNWI1OGYwMmM3N2RhZGMzZWNlZjA3ZWE0Yzc0NzJmNjRlMGZkYzMyY2U1NTIyNDg5MzYyNjgwIgogICAgfQogIH0KfQ==
+        buy: 100.0
+        sell: 20.0
