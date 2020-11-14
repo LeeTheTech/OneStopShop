@@ -200,7 +200,6 @@ public class Data {
 
                 if (subMenuName != null) {
                     getDataMenuUtil(menu).setItemSubMenu(item, subMenuName);
-                    //global list of menus
                 } else {
                     //menu item shop
                     getDataMenuUtil(menu).setShop(item, shop);
@@ -210,8 +209,8 @@ public class Data {
                     getDataMenuUtil(menu).addMenuShop(shop);
                     //global list of shops
                     addShopList(shop);
-                    //global list of menus
                 }
+                //global list of menus
                 if (!getMenuList().contains(menu)) addMenuList(menu);
             });
         });
