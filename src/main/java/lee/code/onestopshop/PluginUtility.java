@@ -157,9 +157,8 @@ public class PluginUtility {
         //check if the item stacks by 1 or 16
         if (item.getMaxStackSize() == 1 || item.getMaxStackSize() == 16) {
             item.setAmount(1);
-            for (int give = 0; give < amount; give++) {
-                player.getInventory().addItem(item);
-            }
+            for (int give = 0; give < amount; give++) player.getInventory().addItem(item);
+
         } else {
             item.setAmount(amount);
             player.getInventory().addItem(item);
