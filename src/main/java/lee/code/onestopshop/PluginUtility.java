@@ -7,6 +7,7 @@ import lee.code.onestopshop.files.defaults.Lang;
 import lee.code.onestopshop.files.defaults.Settings;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitScheduler;
@@ -154,14 +155,21 @@ public class PluginUtility {
             return false;
         }
 
-        //check if the item stacks by 1 or 16
-        if (item.getMaxStackSize() == 1 || item.getMaxStackSize() == 16) {
-            item.setAmount(1);
-            for (int give = 0; give < amount; give++) player.getInventory().addItem(item);
+        //command item check
+        if (plugin.getData().getDataShopUtil().getItemCommand(item) != null) {
+            runConsoleCommand(player, plugin.getData().getDataShopUtil().getItemCommand(item));
 
         } else {
-            item.setAmount(amount);
-            player.getInventory().addItem(item);
+
+            //check if the item stacks by 1 or 16
+            if (item.getMaxStackSize() == 1 || item.getMaxStackSize() == 16) {
+                item.setAmount(1);
+                for (int give = 0; give < amount; give++) player.getInventory().addItem(item);
+
+            } else {
+                item.setAmount(amount);
+                player.getInventory().addItem(item);
+            }
         }
 
         //take money if using Vault
@@ -295,5 +303,15 @@ public class PluginUtility {
         else item = new ItemStack(player.getInventory().getItemInMainHand());
         item.setAmount(1);
         return item;
+    }
+
+    public void runConsoleCommand(Player player, String command) {
+        OneStopShop plugin = OneStopShop.getPlugin();
+        ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
+        String consoleCommand = command.replaceAll("%player%", player.getName());
+
+        BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
+        scheduler.runTaskLater(plugin, () ->
+                Bukkit.dispatchCommand(console, consoleCommand),3);
     }
 }

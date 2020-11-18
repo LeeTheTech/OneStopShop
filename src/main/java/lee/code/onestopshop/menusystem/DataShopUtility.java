@@ -11,6 +11,7 @@ public class DataShopUtility {
 
     private final HashMap<ItemStack, Double> buyValue = new HashMap<>();
     private final HashMap<ItemStack, Double> sellValue = new HashMap<>();
+    private final HashMap<ItemStack, String> itemCommand = new HashMap<>();
     private final HashMap<String, List<ItemStack>> shopItems = new HashMap<>();
     @Getter @Setter private ItemStack economyItem;
     private final HashMap<String, List<String>> skullSkins = new HashMap<>();
@@ -45,6 +46,14 @@ public class DataShopUtility {
 
     public void setShopItems(String shop, List<ItemStack> items) {
         shopItems.put(shop, items);
+    }
+
+    public void setItemCommand(ItemStack item, String command) {
+        itemCommand.put(item, command);
+    }
+
+    public String getItemCommand(ItemStack item) {
+        return itemCommand.get(item);
     }
 
 }

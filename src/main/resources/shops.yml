@@ -75,12 +75,6 @@ shops:
           PROTECTION_FALL: 3
         buy: 100.0
         sell: 20.0
-  mob-drop-shop:
-    items:
-      '1':
-        material: STRING
-        buy: 100.0
-        sell: 20.0
   block-shop:
     items:
       '1':
@@ -171,3 +165,14 @@ shops:
         skull: ewogICJ0aW1lc3RhbXAiIDogMTYwMzY5MTkyNTAyMSwKICAicHJvZmlsZUlkIiA6ICIwNjlhNzlmNDQ0ZTk0NzI2YTViZWZjYTkwZTM4YWFmNSIsCiAgInByb2ZpbGVOYW1lIiA6ICJOb3RjaCIsCiAgInNpZ25hdHVyZVJlcXVpcmVkIiA6IHRydWUsCiAgInRleHR1cmVzIiA6IHsKICAgICJTS0lOIiA6IHsKICAgICAgInVybCIgOiAiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS8yOTIwMDlhNDkyNWI1OGYwMmM3N2RhZGMzZWNlZjA3ZWE0Yzc0NzJmNjRlMGZkYzMyY2U1NTIyNDg5MzYyNjgwIgogICAgfQogIH0KfQ==
         buy: 100.0
         sell: 20.0
+  command-shop:
+    items:
+      '1':
+        name: '&eCommand Fly'
+        lore:
+          - '&bWhen you buy this you will'
+          - '&bget the perm to fly.'
+        material: REDSTONE
+        command: 'lp user %player% permission set essentials.fly'
+        buy: 1000.0
+        sell: 0.0

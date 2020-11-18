@@ -106,15 +106,15 @@ menus:
           - '&7&oEnchanted Book items.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       '10':
-        name: '&c&lMob Drop Category'
-        material: BONE
+        name: '&c&lCommand Shop'
+        material: COMMAND_BLOCK
         menu-slot: 22
-        shop: mob-drop-shop
+        shop: command-shop
         lore:
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
           - '     &6-= &2&lDescription &6=-'
           - '&7&oThis category is stocked with'
-          - '&7&omob drop items.'
+          - '&7&ocommands you can buy.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       '11':
         name: '&6&lBlock Category'

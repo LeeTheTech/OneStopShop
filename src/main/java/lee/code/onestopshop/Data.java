@@ -237,6 +237,7 @@ public class Data {
                 double sell;
                 double buy;
                 ItemStack item;
+                String command;
 
                 //loop through shops config
                 for (String key : file.getConfigurationSection("shops." + shop + ".items").getKeys(false)) {
@@ -246,6 +247,7 @@ public class Data {
                     sell = file.getDouble("shops." + shop + ".items." + key + ".sell");
                     buy = file.getDouble("shops." + shop + ".items." + key + ".buy");
                     item = XItemStack.deserialize(section);
+                    command = file.getString("shops." + shop + ".items." + key + ".command");
 
                     //check for duplicate item
                     if (itemList.contains(item)) {
@@ -255,6 +257,8 @@ public class Data {
                         getDataShopUtil().setSellValue(item, sell);
                         getDataShopUtil().setBuyValue(item, buy);
                         itemList.add(item);
+
+                        if (command != null) getDataShopUtil().setItemCommand(item, command);
 
                         //skull skin check
                         if (item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {

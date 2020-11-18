@@ -93,10 +93,17 @@ public class ShopMenu extends PaginatedMenu {
             return;
         }
 
-        //set selected item from saved items
+        //command transaction menu
+        if (plugin.getData().getDataShopUtil().getItemCommand(item) != null) {
+            playerMenuUtility.setSelectedShopItem(e.getCurrentItem());
+            new CMDTransactionMenu(playerMenuUtility).open();
+            plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+            return;
+        }
+
+        //item transaction menu
         for (ItemStack savedItem : items) {
 
-            //normal item
             if (savedItem.equals(e.getCurrentItem())) {
                 playerMenuUtility.setSelectedShopItem(savedItem);
                 new TransactionMenu(playerMenuUtility).open();
