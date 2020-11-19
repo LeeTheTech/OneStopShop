@@ -27,7 +27,7 @@ public class InteractListener implements Listener  {
 
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 
-            ItemStack wand = new SellWandBuilder().setName(Lang.WAND_SELL_WAND_NAME.getConfigValue(null)).setLore(Arrays.asList(Lang.WAND_SELL_WAND_LORE.getConfigValue(null))).buildItemStack();
+            ItemStack wand = plugin.getData().getSellWand();
             ItemStack handItem = plugin.getPluginUtility().getHandItem(e.getPlayer());
 
             if (!handItem.equals(wand)) return;

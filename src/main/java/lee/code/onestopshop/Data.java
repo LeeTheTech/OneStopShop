@@ -1,5 +1,7 @@
 package lee.code.onestopshop;
 
+import lee.code.onestopshop.files.defaults.Lang;
+import lee.code.onestopshop.itembuilders.SellWandBuilder;
 import lee.code.onestopshop.menusystem.DataAPIUtility;
 import lee.code.onestopshop.xseries.SkullUtils;
 import lee.code.onestopshop.xseries.XItemStack;
@@ -94,8 +96,11 @@ public class Data {
         playerClickDelay.remove(uuid);
     }
 
-    //main-menu
-    @Getter @Setter public String mainMenu;
+    //main menu
+    @Getter @Setter private String mainMenu;
+
+    //sell wand
+    @Getter @Setter private ItemStack sellWand;
 
     //menu utility for managing players using the plugin menus
     public PlayerMenuUtility getPlayerMenuUtil(UUID uuid) {
@@ -149,6 +154,7 @@ public class Data {
         loadEconomyItem();
         loadSpawnerMobs();
         loadApiItems();
+        loadSellWand();
     }
 
     //loads menus data
@@ -309,6 +315,12 @@ public class Data {
             for (EntityType mob : EntityType.values()) {
                 addSpawnerMob(mob.toString());
             }
+        }
+    }
+
+    private void loadSellWand() {
+        if (getSellWand() == null) {
+            setSellWand(new SellWandBuilder().setName(Lang.WAND_SELL_WAND_NAME.getConfigValue(null)).setLore(Arrays.asList(Lang.WAND_SELL_WAND_LORE.getConfigValue(null))).buildItemStack());
         }
     }
 }

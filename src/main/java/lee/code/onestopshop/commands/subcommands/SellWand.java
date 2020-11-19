@@ -64,7 +64,7 @@ public class SellWand extends SubCommand {
             }
         }
 
-        ItemStack item = new SellWandBuilder().setName(Lang.WAND_SELL_WAND_NAME.getConfigValue(null)).setLore(Arrays.asList(Lang.WAND_SELL_WAND_LORE.getConfigValue(null))).buildItemStack();
+        ItemStack item = plugin.getData().getSellWand();
 
         String itemString = plugin.getPluginUtility().formatMatFriendly(item);
         if (plugin.getPluginUtility().getAmountOfFreeSpace(target, item) > 0) {
@@ -118,7 +118,7 @@ public class SellWand extends SubCommand {
                 return;
             }
 
-            ItemStack item = new SellWandBuilder().setName(Lang.WAND_SELL_WAND_NAME.getConfigValue(null)).setLore(Arrays.asList(Lang.WAND_SELL_WAND_LORE.getConfigValue(null))).buildItemStack();
+            ItemStack item = plugin.getData().getSellWand();
 
             String itemString = plugin.getPluginUtility().formatMatFriendly(item);
             if (plugin.getPluginUtility().getAmountOfFreeSpace(target, item) > 0) {
