@@ -3,7 +3,7 @@ main: lee.code.onestopshop.OneStopShop
 version: ${project.version}
 api-version: 1.13
 author: Lee
-softdepend: [Vault]
+softdepend: [Vault, Essentials, SunLight, SimplisticEconomy]
 commands:
   shop:
     description: Opens shop menu.
