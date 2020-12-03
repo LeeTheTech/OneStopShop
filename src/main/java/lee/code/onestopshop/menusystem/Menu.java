@@ -2,7 +2,6 @@ package lee.code.onestopshop.menusystem;
 
 import lee.code.onestopshop.files.defaults.Config;
 import lee.code.onestopshop.files.defaults.Lang;
-import lee.code.onestopshop.OneStopShop;
 import lee.code.onestopshop.xseries.XMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

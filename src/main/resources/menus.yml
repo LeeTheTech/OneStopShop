@@ -176,17 +176,6 @@ menus:
           - '&7&oweapons.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       '16':
-        name: '&e&lWeapon Category'
-        material: GOLDEN_SWORD
-        menu-slot: 6
-        shop: weapon-shop
-        lore:
-          - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-          - '     &6-= &2&lDescription &6=-'
-          - '&7&oThis category is stocked with'
-          - '&7&oweapons.'
-          - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      '17':
         name: '&5&lEnd Category'
         material: END_STONE
         menu-slot: 38
@@ -197,7 +186,7 @@ menus:
           - '&7&oThis category is stocked with'
           - '&7&oend items.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      '18':
+      '17':
         name: '&c&lNether Category'
         material: NETHERRACK
         menu-slot: 42
@@ -208,7 +197,7 @@ menus:
           - '&7&oThis category is stocked with'
           - '&7&onether items.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      '19':
+      '18':
         name: '&e&lTest Sub Menu'
         material: PAPER
         menu-slot: 40
@@ -218,7 +207,7 @@ menus:
           - '     &6-= &2&lDescription &6=-'
           - '&7&oYou can make unlimited menus.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
-      '20':
+      '19':
         name: '&e&lHead Shop'
         material: PLAYER_HEAD
         skull: ewogICJ0aW1lc3RhbXAiIDogMTYwMzY4MTgxNjY0MiwKICAicHJvZmlsZUlkIiA6ICIwNzUyMzcxMzAxNjE0M2U4ODYyODc2N2M4NTg5MjhkOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJCb3NzbWFuIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzcyMTBiM2ViMTE4MTYwMGQyODRhMTJmYjJhNmI0Njc4MjFmZWVkNWZlMDU5NGJhZGMyM2E5ZWU4NTY3NDg3MjQiCiAgICB9CiAgfQp9
