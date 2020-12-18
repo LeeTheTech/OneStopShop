@@ -35,8 +35,6 @@ public class ShopMenu extends PaginatedMenu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-        e.setCancelled(true);
-
         OneStopShop plugin = OneStopShop.getPlugin();
 
         //click delay

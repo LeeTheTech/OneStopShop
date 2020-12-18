@@ -31,7 +31,7 @@ public class PluginUtility {
     }
 
     //format item amount being sold
-    public String formatAmount(Integer value) {
+    public String formatAmount(int value) {
         DecimalFormat formatter = new DecimalFormat(Config.AMOUNT_FORMAT.getConfigValue(null));
         return formatter.format(value);
     }

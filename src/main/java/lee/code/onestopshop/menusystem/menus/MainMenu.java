@@ -32,8 +32,6 @@ public class MainMenu extends Menu {
 
     @Override
     public void handleMenu(InventoryClickEvent e) {
-        e.setCancelled(true);
-
         OneStopShop plugin = OneStopShop.getPlugin();
 
         //click delay
