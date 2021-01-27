@@ -138,6 +138,10 @@ public enum Lang {
     ERROR_TRANSACTION_NOT_ENOUGH_ITEMS("ERROR_TRANSACTION_NOT_ENOUGH_ITEMS", "&cSadly you do not have enough &6{0} &cto sell."),
     //Error can not buy 0 items
     ERROR_TRANSACTION_BUY_ZERO_ITEMS("ERROR_TRANSACTION_BUY_ZERO_ITEMS", "&cYou can not buy zero items."),
+    //Error buy value 0
+    ERROR_TRANSACTION_BUY_VALUE_ZERO("ERROR_TRANSACTION_BUY_VALUE_ZERO", "&cThis item currently has buying disabled."),
+    //Error sell value 0
+    ERROR_TRANSACTION_SELL_VALUE_ZERO("ERROR_TRANSACTION_SELL_VALUE_ZERO", "&cThis item currently has selling disabled."),
     //Error no next page
     ERROR_NEXT_PAGE("ERROR_NEXT_PAGE", "&7You are on the last page."),
     //Error no previous page

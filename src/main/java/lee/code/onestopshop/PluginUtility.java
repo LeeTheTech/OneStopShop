@@ -116,6 +116,13 @@ public class PluginUtility {
         boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_ITEM.getConfigValue();
         String mat = formatMatFriendly(item);
 
+        //check if buy value is 0
+        if (buyValue == 0) {
+            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BUY_VALUE_ZERO.getConfigValue(null));
+            playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+            return false;
+        }
+
         //vault economy check
         if (vaultEnabled) {
             Economy economy = plugin.getEconomy();
@@ -123,8 +130,7 @@ public class PluginUtility {
 
             //balance check
             if (playerBalance < buyValue) {
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BALANCE.getConfigValue(new String[]{
-                        formatValue(playerBalance), formatValue(buyValue), formatAmount(amount), mat}));
+                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BALANCE.getConfigValue(new String[]{ formatValue(playerBalance), formatValue(buyValue), formatAmount(amount), mat}));
                 playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
                 return false;
             }
@@ -132,8 +138,7 @@ public class PluginUtility {
             int playerBalance = getItemAmount(player, plugin.getData().getDataShopUtil().getEconomyItem());
 
             if (playerBalance < (int) buyValue) {
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BALANCE.getConfigValue(new String[]{
-                        formatValue((double) playerBalance), formatValue(buyValue), formatAmount(amount), mat}));
+                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BALANCE.getConfigValue(new String[]{ formatValue((double) playerBalance), formatValue(buyValue), formatAmount(amount), mat}));
                 playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
                 return false;
             }
@@ -201,6 +206,13 @@ public class PluginUtility {
 
         if (itemCount < amount || itemCount == 0) {
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_NOT_ENOUGH_ITEMS.getConfigValue(new String[]{mat}));
+            playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+            return false;
+        }
+
+        //check if sell value is 0
+        if (sellValue == 0) {
+            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_SELL_VALUE_ZERO.getConfigValue(null));
             playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
             return false;
         }
