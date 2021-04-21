@@ -106,7 +106,7 @@ menus:
           - '&7&oEnchanted Book items.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       '10':
-        name: '&c&lCommand Shop'
+        name: '&c&lCommand Category'
         material: COMMAND_BLOCK
         menu-slot: 22
         shop: command-shop
@@ -208,7 +208,7 @@ menus:
           - '&7&oYou can make unlimited menus.'
           - '&e▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬▬'
       '19':
-        name: '&e&lHead Shop'
+        name: '&e&lHead Category'
         material: PLAYER_HEAD
         skull: ewogICJ0aW1lc3RhbXAiIDogMTYwMzY4MTgxNjY0MiwKICAicHJvZmlsZUlkIiA6ICIwNzUyMzcxMzAxNjE0M2U4ODYyODc2N2M4NTg5MjhkOCIsCiAgInByb2ZpbGVOYW1lIiA6ICJCb3NzbWFuIiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzcyMTBiM2ViMTE4MTYwMGQyODRhMTJmYjJhNmI0Njc4MjFmZWVkNWZlMDU5NGJhZGMyM2E5ZWU4NTY3NDg3MjQiCiAgICB9CiAgfQp9
         menu-slot: 4

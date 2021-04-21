@@ -8,7 +8,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 
 @AllArgsConstructor
 public enum Lang {
-    PREFIX("PREFIX", "&2&lShops &e➔ &r"),
+    PREFIX("PREFIX", "&2&lShop &e➔ &r"),
     INTERFACE_SHOP_MENU_TITLE("INTERFACE_SHOP_MENU_TITLE", "{0} &e➔ &8Page &8{1}"),
     INTERFACE_TRANSACTION_MENU_TITLE("INTERFACE_TRANSACTION_MENU_TITLE", "&2&lShop &e➔ &r{0}"),
     INTERFACE_BUY_NAME("INTERFACE_BUY_NAME", "&a&lBuy"),
