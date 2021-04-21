@@ -117,7 +117,6 @@ public class TransactionMenu extends Menu {
                     sellInventoryItem();
                 }
                 break;
-
             //back
             case 46:
                 new ShopMenu(playerMenuUtility).open();
@@ -137,129 +136,119 @@ public class TransactionMenu extends Menu {
 
         if (Settings.INTERFACE_BOOLEAN_TRANSACTION_FILLER_GLASS.getConfigValue()) setFillerGlass();
 
-        ItemStack buyItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BUY.getConfigValue(null));
-        ItemStack sellItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_SELL.getConfigValue(null));
-        ItemStack backItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BACK.getConfigValue(null));
-        ItemStack closeItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_CLOSE.getConfigValue(null));
+        ItemStack buyItem = new ItemStack(BUY_ITEM);
+        ItemStack sellItem = new ItemStack(SELL_ITEM);
+        ItemStack backItem = new ItemStack(BACK_ITEM);
+        ItemStack closeItem = new ItemStack(CLOSE_ITEM);
         
         ItemStack selectedItem = new ItemStack(playerMenuUtility.getSelectedShopItem());
 
         ItemMeta buyItemMeta = buyItem.getItemMeta();
         ItemMeta sellItemMeta = sellItem.getItemMeta();
-        ItemMeta backItemMeta = backItem.getItemMeta();
-        ItemMeta closeItemMeta = closeItem.getItemMeta();
-
-        buyItemMeta.setDisplayName(Lang.INTERFACE_BUY_NAME.getConfigValue(null));
-        sellItemMeta.setDisplayName(Lang.INTERFACE_SELL_NAME.getConfigValue(null));
-        backItemMeta.setDisplayName(Lang.INTERFACE_BACK_MENU_NAME.getConfigValue(null));
-        closeItemMeta.setDisplayName(Lang.INTERFACE_CLOSE_MENU_NAME.getConfigValue(null));
 
         double buyItemValue = plugin.getData().getDataShopUtil().getBuyValue(selectedItem);
         double sellItemValue = plugin.getData().getDataShopUtil().getSellValue(selectedItem);
 
         //buy item lore
-        ArrayList<String> buyItemLore = new ArrayList<>();
-        double buyValue = buyItemValue;
-        for (int i = 1; i <= 65; i++) {
+        if (buyItemMeta != null && sellItemMeta != null) {
+            ArrayList<String> buyItemLore = new ArrayList<>();
+            double buyValue = buyItemValue;
 
-            switch (i) {
+            for (int i = 1; i <= 65; i++) {
+                switch (i) {
+                    case 1:
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
 
-                case 1:
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
+                        buyItemMeta.setLore(buyItemLore);
+                        buyItem.setItemMeta(buyItemMeta);
+                        inventory.setItem(12, buyItem);
+                        buyItemLore.clear();
+                        break;
 
-                    buyItemMeta.setLore(buyItemLore);
-                    buyItem.setItemMeta(buyItemMeta);
-                    inventory.setItem(12, buyItem);
-                    buyItemLore.clear();
-                    break;
+                    case 8:
+                        buyValue = buyItemValue * i;
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
 
-                case 8:
-                    buyValue = buyItemValue * i;
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
+                        buyItemMeta.setLore(buyItemLore);
+                        buyItem.setItemMeta(buyItemMeta);
+                        inventory.setItem(21, buyItem);
+                        buyItemLore.clear();
+                        break;
 
-                    buyItemMeta.setLore(buyItemLore);
-                    buyItem.setItemMeta(buyItemMeta);
-                    inventory.setItem(21, buyItem);
-                    buyItemLore.clear();
-                    break;
+                    case 64:
+                        buyValue = buyItemValue * i;
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
 
-                case 64:
-                    buyValue = buyItemValue * i;
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
+                        buyItemMeta.setLore(buyItemLore);
+                        buyItem.setItemMeta(buyItemMeta);
+                        inventory.setItem(30, buyItem);
+                        buyItemLore.clear();
+                        break;
 
-                    buyItemMeta.setLore(buyItemLore);
-                    buyItem.setItemMeta(buyItemMeta);
-                    inventory.setItem(30, buyItem);
-                    buyItemLore.clear();
-                    break;
-
-                //buy inventory
-                case 65:
-                    buyInventoryItem();
-                    break;
+                    //buy inventory
+                    case 65:
+                        buyInventoryItem();
+                        break;
+                }
             }
 
-        }
+            //sell item lore
+            ArrayList<String> sellItemLore = new ArrayList<>();
+            double sellValue = sellItemValue;
+            for (int i = 1; i <= 65; i++) {
 
-        //sell item lore
-        ArrayList<String> sellItemLore = new ArrayList<>();
-        double sellValue = sellItemValue;
-        for (int i = 1; i <= 65; i++) {
+                switch (i) {
 
-            switch (i) {
+                    case 1:
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
 
-                case 1:
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
+                        sellItemMeta.setLore(sellItemLore);
+                        sellItem.setItemMeta(sellItemMeta);
+                        inventory.setItem(14, sellItem);
+                        sellItemLore.clear();
+                        break;
+                    case 8:
+                        sellValue = sellItemValue * i;
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
 
-                    sellItemMeta.setLore(sellItemLore);
-                    sellItem.setItemMeta(sellItemMeta);
-                    inventory.setItem(14, sellItem);
-                    sellItemLore.clear();
-                    break;
-                case 8:
-                    sellValue = sellItemValue * i;
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
+                        sellItemMeta.setLore(sellItemLore);
+                        sellItem.setItemMeta(sellItemMeta);
+                        inventory.setItem(23, sellItem);
+                        sellItemLore.clear();
+                        break;
+                    case 64:
+                        sellValue = sellItemValue * i;
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
+                        sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
 
-                    sellItemMeta.setLore(sellItemLore);
-                    sellItem.setItemMeta(sellItemMeta);
-                    inventory.setItem(23, sellItem);
-                    sellItemLore.clear();
-                    break;
-                case 64:
-                    sellValue = sellItemValue * i;
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { String.valueOf(i) }));
-                    sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
-
-                    sellItemMeta.setLore(sellItemLore);
-                    sellItem.setItemMeta(sellItemMeta);
-                    inventory.setItem(32, sellItem);
-                    sellItemLore.clear();
-                    break;
-                //sell inventory
-                case 65:
-                    sellInventoryItem();
-                    break;
+                        sellItemMeta.setLore(sellItemLore);
+                        sellItem.setItemMeta(sellItemMeta);
+                        inventory.setItem(32, sellItem);
+                        sellItemLore.clear();
+                        break;
+                    //sell inventory
+                    case 65:
+                        sellInventoryItem();
+                        break;
+                }
             }
+
+            //selected item
+            selectedItem.setAmount(1);
+            inventory.setItem(13, selectedItem);
+            selectedItem.setAmount(8);
+            inventory.setItem(22, selectedItem);
+            selectedItem.setAmount(64);
+            inventory.setItem(31, selectedItem);
+
+            inventory.setItem(46, backItem);
+            inventory.setItem(52, closeItem);
         }
-
-        //selected item
-        selectedItem.setAmount(1);
-        inventory.setItem(13, selectedItem);
-        selectedItem.setAmount(8);
-        inventory.setItem(22, selectedItem);
-        selectedItem.setAmount(64);
-        inventory.setItem(31, selectedItem);
-
-        //back icon
-        backItem.setItemMeta(backItemMeta);
-        closeItem.setItemMeta(closeItemMeta);
-        inventory.setItem(46, backItem);
-        inventory.setItem(52, closeItem);
     }
 
     private void buyInventoryItem() {
@@ -272,18 +261,20 @@ public class TransactionMenu extends Menu {
 
         ItemStack buyAllItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BUY_INVENTORY.getConfigValue(null));
         ItemMeta buyAllItemMeta = buyAllItem.getItemMeta();
-        buyAllItemMeta.setDisplayName(Lang.INTERFACE_BUY_INVENTORY_NAME.getConfigValue(null));
+        if (buyAllItemMeta != null) {
+            buyAllItemMeta.setDisplayName(Lang.INTERFACE_BUY_INVENTORY_NAME.getConfigValue(null));
 
-        double buyValue = buyItemValue * plugin.getPU().getAmountOfFreeSpace(playerMenuUtility.getOwner(), selectedItem);
-        int amount = plugin.getPU().getAmountOfFreeSpace(playerMenuUtility.getOwner().getPlayer(), selectedItem);
+            double buyValue = buyItemValue * plugin.getPU().getAmountOfFreeSpace(playerMenuUtility.getOwner(), selectedItem);
+            int amount = plugin.getPU().getAmountOfFreeSpace(playerMenuUtility.getOwner().getPlayer(), selectedItem);
 
-        buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { plugin.getPU().formatAmount(amount) }));
-        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
+            buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { plugin.getPU().formatAmount(amount) }));
+            buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyValue) }));
 
-        buyAllItemMeta.setLore(buyItemLore);
-        buyAllItem.setItemMeta(buyAllItemMeta);
-        inventory.setItem(39, buyAllItem);
-        buyItemLore.clear();
+            buyAllItemMeta.setLore(buyItemLore);
+            buyAllItem.setItemMeta(buyAllItemMeta);
+            inventory.setItem(39, buyAllItem);
+            buyItemLore.clear();
+        }
     }
 
     private void sellInventoryItem() {
@@ -292,21 +283,23 @@ public class TransactionMenu extends Menu {
 
         ItemStack sellAllItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_SELL_INVENTORY.getConfigValue(null));
         ItemMeta sellAllItemMeta = sellAllItem.getItemMeta();
-        sellAllItemMeta.setDisplayName(Lang.INTERFACE_SELL_INVENTORY_NAME.getConfigValue(null));
+        if (sellAllItemMeta != null) {
+            sellAllItemMeta.setDisplayName(Lang.INTERFACE_SELL_INVENTORY_NAME.getConfigValue(null));
 
-        double sellItemValue = plugin.getData().getDataShopUtil().getSellValue(selectedItem);
+            double sellItemValue = plugin.getData().getDataShopUtil().getSellValue(selectedItem);
 
-        //sell inventory item lore
-        ArrayList<String> sellItemLore = new ArrayList<>();
+            //sell inventory item lore
+            ArrayList<String> sellItemLore = new ArrayList<>();
 
-        double sellValue = sellItemValue * plugin.getPU().getItemAmount(playerMenuUtility.getOwner(), selectedItem);
-        int amount = plugin.getPU().getItemAmount(playerMenuUtility.getOwner().getPlayer(), selectedItem);
-        sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { plugin.getPU().formatAmount(amount) }));
-        sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
+            double sellValue = sellItemValue * plugin.getPU().getItemAmount(playerMenuUtility.getOwner(), selectedItem);
+            int amount = plugin.getPU().getItemAmount(playerMenuUtility.getOwner().getPlayer(), selectedItem);
+            sellItemLore.add(Lang.INTERFACE_SELL_LORE_1.getConfigValue(new String [] { plugin.getPU().formatAmount(amount) }));
+            sellItemLore.add(Lang.INTERFACE_SELL_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(sellValue) }));
 
-        sellAllItemMeta.setLore(sellItemLore);
-        sellAllItem.setItemMeta(sellAllItemMeta);
-        inventory.setItem(41, sellAllItem);
-        sellItemLore.clear();
+            sellAllItemMeta.setLore(sellItemLore);
+            sellAllItem.setItemMeta(sellAllItemMeta);
+            inventory.setItem(41, sellAllItem);
+            sellItemLore.clear();
+        }
     }
 }

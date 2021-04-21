@@ -9,8 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public enum Settings {
     INTERFACE_BOOLEAN_MENU_FILLER_GLASS("FillerGlass.Menu", true),
     INTERFACE_BOOLEAN_TRANSACTION_FILLER_GLASS("FillerGlass.Transaction", true),
-    BOOLEAN_ECONOMY_VAULT("Economy.Vault", true),
-    BOOLEAN_ECONOMY_ITEM("Economy.Item", false),
+    BOOLEAN_ECONOMY_VAULT("Economy.Vault", false),
     SPAWNER_SUPPORT("Spawners.Enabled", true),
     SPAWNER_DENY_MOB_EGGS("Spawners.DenyMobEggs", true),
     SPAWNER_DENY_ANVIL_RENAME("Spawners.DenyAnvilRename", true),

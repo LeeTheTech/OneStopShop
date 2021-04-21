@@ -113,15 +113,7 @@ public class PU {
 
         double buyValue = plugin.getData().getDataShopUtil().getBuyValue(item) * amount;
         boolean vaultEnabled = Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue();
-        boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_ITEM.getConfigValue();
         String mat = formatMatFriendly(item);
-
-        //check if buy value is 0
-        if (buyValue == 0) {
-            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BUY_VALUE_ZERO.getConfigValue(null));
-            playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
-            return false;
-        }
 
         //vault economy check
         if (vaultEnabled) {
@@ -134,7 +126,7 @@ public class PU {
                 playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
                 return false;
             }
-        } else if (itemEconomyEnabled) {
+        } else {
             int playerBalance = getItemAmount(player, plugin.getData().getDataShopUtil().getEconomyItem());
 
             if (playerBalance < (int) buyValue) {
@@ -146,6 +138,13 @@ public class PU {
 
         int space = getAmountOfFreeSpace(player, item);
 
+        //space check
+        if (space < amount) {
+            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_NO_SPACE.getConfigValue(null));
+            playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+            return false;
+        }
+
         //check if trying to buy 0 items
         if (amount == 0) {
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BUY_ZERO_ITEMS.getConfigValue(null));
@@ -153,9 +152,9 @@ public class PU {
             return false;
         }
 
-        //space check
-        if (space < amount) {
-            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_NO_SPACE.getConfigValue(null));
+        //check if buy value is 0
+        if (buyValue == 0) {
+            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_BUY_VALUE_ZERO.getConfigValue(null));
             playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
             return false;
         }
@@ -182,7 +181,7 @@ public class PU {
             Economy economy = plugin.getEconomy();
             economy.withdrawPlayer(player, buyValue);
 
-        } else if (itemEconomyEnabled) {
+        } else {
             ItemStack economyItem = plugin.getData().getDataShopUtil().getEconomyItem();
             consumeItems(player, economyItem, (int) buyValue);
         }
@@ -193,12 +192,10 @@ public class PU {
     }
 
     public boolean takePlayerItems(Player player, ItemStack item, int amount, boolean mainHand) {
-
         OneStopShop plugin = OneStopShop.getPlugin();
 
         double sellValue = plugin.getData().getDataShopUtil().getSellValue(item) * amount;
         boolean vaultEnabled = Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue();
-        boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_ITEM.getConfigValue();
         String mat = formatMatFriendly(item);
 
         //check players item count for item being sold
@@ -232,7 +229,7 @@ public class PU {
             } else {
                 consumeItems(player, item, amount);
             }
-        } else if (itemEconomyEnabled) {
+        } else {
             ItemStack economyItem = new ItemStack(plugin.getData().getDataShopUtil().getEconomyItem());
             int space = getAmountOfFreeSpace(player, economyItem);
 

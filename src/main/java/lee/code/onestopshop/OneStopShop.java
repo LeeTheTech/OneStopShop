@@ -51,7 +51,7 @@ public class OneStopShop extends JavaPlugin {
         //load vault economy
         if (Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue()) {
             if (!setupEconomy()) {
-                Bukkit.getLogger().log(Level.SEVERE, "[OneStopShop] Vault is enabled in the config but is not being handled, plugin disabled.");
+                Bukkit.getLogger().log(Level.SEVERE, "[OneStopShop] Vault is set to true in the config but the Vault economy isn't being handled by any other plugin, OneStopShop is now disabled.");
                 getServer().getPluginManager().disablePlugin(this);
             }
         }

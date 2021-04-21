@@ -26,11 +26,10 @@ public class SellWandListener implements Listener {
 
     @EventHandler
     public void onSellWandInteract(SellWandInteractEvent e) {
-
         OneStopShop plugin = OneStopShop.getPlugin();
 
         Player player = e.getWandUser();
-        boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_ITEM.getConfigValue();
+        boolean vaultEnabled = Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue();
         int totalAmount = 0;
         double totalValue = 0.0;
 
@@ -45,10 +44,12 @@ public class SellWandListener implements Listener {
                     double value = plugin.getData().getDataShopUtil().getSellValue(copy);
                     double stackValue = (value * amount);
 
-                    if (itemEconomyEnabled) {
+                    if (vaultEnabled) {
+                        Economy economy = plugin.getEconomy();
+                        economy.depositPlayer(player, stackValue);
+                    } else {
                         ItemStack economyItem = new ItemStack(plugin.getData().getDataShopUtil().getEconomyItem());
                         if (plugin.getPU().getAmountOfFreeSpace(player, economyItem) < (int) stackValue) {
-
                             if ((int) totalValue == 0) {
                                 player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_ECONOMY_ITEM_SPACE.getConfigValue(null));
                                 plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
@@ -62,11 +63,7 @@ public class SellWandListener implements Listener {
                         //give player economy item
                         economyItem.setAmount((int) stackValue);
                         player.getInventory().addItem(economyItem);
-                    } else {
-                        Economy economy = plugin.getEconomy();
-                        economy.depositPlayer(player, stackValue);
                     }
-
                     totalValue = totalValue + (value * amount);
                     totalAmount = totalAmount + amount;
                     removeItem(e.getContainer(), item);
@@ -89,20 +86,16 @@ public class SellWandListener implements Listener {
         List<ItemStack> items = new ArrayList<>();
 
         if (container.getState() instanceof Chest) {
-
             Chest chest = (Chest) loc.getBlock().getState();
             items = Arrays.asList(chest.getInventory().getContents());
-
         } else if (XMaterial.supports(11) && container.getState() instanceof ShulkerBox) {
-
             ShulkerBox shulkerBox = (ShulkerBox) loc.getBlock().getState();
             items = Arrays.asList(shulkerBox.getInventory().getContents());
-
         } else if (XMaterial.supports(14) && container.getState() instanceof Barrel) {
-
             Barrel barrel = (Barrel) loc.getBlock().getState();
             items = Arrays.asList(barrel.getInventory().getContents());
         }
+
         return items;
     }
 
@@ -111,20 +104,14 @@ public class SellWandListener implements Listener {
         Location loc = container.getLocation();
 
         if (container.getState() instanceof Chest) {
-
             Chest chest = (Chest) loc.getBlock().getState();
             chest.getInventory().removeItem(item);
-
         } else if (XMaterial.supports(11) && container.getState() instanceof ShulkerBox) {
-
             ShulkerBox shulkerBox = (ShulkerBox) loc.getBlock().getState();
             shulkerBox.getInventory().removeItem(item);
-
         } else if (XMaterial.supports(14) && container.getState() instanceof Barrel) {
-
             Barrel barrel = (Barrel) loc.getBlock().getState();
             barrel.getInventory().removeItem(item);
-
         }
     }
 }

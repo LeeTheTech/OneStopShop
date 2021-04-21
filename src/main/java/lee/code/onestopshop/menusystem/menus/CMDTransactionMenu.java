@@ -68,44 +68,35 @@ public class CMDTransactionMenu extends PaginatedMenu {
 
     @Override
     public void setMenuItems(String menu) {
-
         OneStopShop plugin = OneStopShop.getPlugin();
 
         if (Settings.INTERFACE_BOOLEAN_TRANSACTION_FILLER_GLASS.getConfigValue()) setFillerGlass();
 
-        ItemStack buyItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BUY.getConfigValue(null));
-        ItemStack backItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BACK.getConfigValue(null));
-        ItemStack closeItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_CLOSE.getConfigValue(null));
+        ItemStack buyItem = new ItemStack(BUY_ITEM);
+        ItemStack backItem = new ItemStack(BACK_ITEM);
+        ItemStack closeItem = new ItemStack(CLOSE_ITEM);
 
         ItemStack selectedItem = new ItemStack(playerMenuUtility.getSelectedShopItem());
 
         ItemMeta buyItemMeta = buyItem.getItemMeta();
-        ItemMeta backItemMeta = backItem.getItemMeta();
-        ItemMeta closeItemMeta = closeItem.getItemMeta();
+        if (buyItemMeta != null) {
+            double buyItemValue = plugin.getData().getDataShopUtil().getBuyValue(selectedItem);
 
-        buyItemMeta.setDisplayName(Lang.INTERFACE_BUY_NAME.getConfigValue(null));
-        backItemMeta.setDisplayName(Lang.INTERFACE_BACK_MENU_NAME.getConfigValue(null));
-        closeItemMeta.setDisplayName(Lang.INTERFACE_CLOSE_MENU_NAME.getConfigValue(null));
+            ArrayList<String> buyItemLore = new ArrayList<>();
 
-        double buyItemValue = plugin.getData().getDataShopUtil().getBuyValue(selectedItem);
+            buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(1) }));
+            buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyItemValue) }));
 
-        ArrayList<String> buyItemLore = new ArrayList<>();
+            buyItemMeta.setLore(buyItemLore);
+            buyItem.setItemMeta(buyItemMeta);
+            inventory.setItem(31, buyItem);
 
-        buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(1) }));
-        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyItemValue) }));
+            //selected item
+            selectedItem.setAmount(1);
+            inventory.setItem(13, selectedItem);
 
-        buyItemMeta.setLore(buyItemLore);
-        buyItem.setItemMeta(buyItemMeta);
-        inventory.setItem(31, buyItem);
-
-        //selected item
-        selectedItem.setAmount(1);
-        inventory.setItem(13, selectedItem);
-
-        //back and close item
-        backItem.setItemMeta(backItemMeta);
-        closeItem.setItemMeta(closeItemMeta);
-        inventory.setItem(38, backItem);
-        inventory.setItem(42, closeItem);
+            inventory.setItem(38, backItem);
+            inventory.setItem(42, closeItem);
+        }
     }
 }

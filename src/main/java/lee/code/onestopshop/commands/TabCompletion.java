@@ -31,7 +31,6 @@ public class TabCompletion implements TabCompleter {
                 List<String> hasCommand = new ArrayList<>();
                 for (String pluginCommand : subCommands) if (sender.hasPermission("oss.shop." + pluginCommand)) hasCommand.add(pluginCommand);
                 return StringUtil.copyPartialMatches(args[0], hasCommand, new ArrayList<>());
-
             } else if (args[0].equals("add")) {
                 if (args.length == 2) return StringUtil.copyPartialMatches(args[1], plugin.getData().getShopList(), new ArrayList<>());
                 else if (args.length == 3) return StringUtil.copyPartialMatches(args[2], Collections.singletonList("<sell>"), new ArrayList<>());
@@ -48,9 +47,8 @@ public class TabCompletion implements TabCompleter {
             } else if (args[0].equals("sellwand")) {
                 if (args.length == 2) return StringUtil.copyPartialMatches(args[1], Collections.singletonList("<amount>"), new ArrayList<>());
                 else if (args.length == 3) return StringUtil.copyPartialMatches(args[2], plugin.getPU().getOnlinePlayers(), new ArrayList<>());
-            }
+            } else return blank;
         }
-
         return blank;
     }
 }

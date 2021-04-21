@@ -14,7 +14,7 @@ public enum Config {
     CURRENCY_FORMAT("CurrencyFormat", "&6${0}"),
     ECONOMY_MODE_ITEM("EconomyMaterial", "EMERALD"),
     SPAWNER_DROP_CHANCE("SpawnerDropChance", "100"),
-    INTERFACE_CLICK_DELAY("MenuClickDelay", "5"),
+    INTERFACE_CLICK_DELAY("MenuClickDelay", "3"),
     INTERFACE_ITEM_FILLER_GLASS("FillerGlass", "GRAY_STAINED_GLASS_PANE"),
     INTERFACE_ITEM_BACK("InterfaceMaterials.Back", "BARRIER"),
     INTERFACE_ITEM_CLOSE("InterfaceMaterials.Close", "BARRIER"),

@@ -50,12 +50,7 @@ public class MainMenu extends Menu {
             if (item.equals(BACK_ITEM)) {
                 playerMenuUtility.setCurrentMenu(plugin.getData().getMainMenu());
                 new MainMenu(playerMenuUtility).openMenu(plugin.getData().getMainMenu());
-                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
-                return;
-            }
-
-            //opens menu or sub menu
-            if (plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item) != null) {
+            } else if (plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item) != null) {
                 String subMenu = plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item);
                 playerMenuUtility.setCurrentMenu(subMenu);
                 new MainMenu(playerMenuUtility).openMenu(subMenu);

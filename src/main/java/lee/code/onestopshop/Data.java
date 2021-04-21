@@ -319,9 +319,9 @@ public class Data {
         OneStopShop plugin = OneStopShop.getPlugin();
 
         FileConfiguration file = plugin.getFile("config").getData();
-        boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_ITEM.getConfigValue();
+        boolean itemEconomyEnabled = Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue();
 
-        if (itemEconomyEnabled) {
+        if (!itemEconomyEnabled) {
             if (file.contains("EconomyMaterial")) {
                 getDataShopUtil().setEconomyItem(plugin.getPU().createXItemStack(file.getString("EconomyMaterial")));
             }

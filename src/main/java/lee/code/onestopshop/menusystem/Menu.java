@@ -23,6 +23,9 @@ public abstract class Menu implements InventoryHolder {
     protected ItemStack BACK_ITEM = makeItem(Config.INTERFACE_ITEM_BACK.getConfigValue(null), Lang.INTERFACE_BACK_MENU_NAME.getConfigValue(null));
     protected ItemStack NEXT_PAGE_ITEM = makeItem(Config.INTERFACE_ITEM_NEXT_PAGE.getConfigValue(null), Lang.INTERFACE_NEXT_PAGE_NAME.getConfigValue(null));
     protected ItemStack PREVIOUS_PAGE_ITEM = makeItem(Config.INTERFACE_ITEM_PREVIOUS_PAGE.getConfigValue(null), Lang.INTERFACE_PREVIOUS_PAGE_NAME.getConfigValue(null));
+    protected ItemStack BUY_ITEM = makeItem(Config.INTERFACE_ITEM_BUY.getConfigValue(null), Lang.INTERFACE_BUY_NAME.getConfigValue(null));
+    protected ItemStack SELL_ITEM = makeItem(Config.INTERFACE_ITEM_SELL.getConfigValue(null), Lang.INTERFACE_SELL_NAME.getConfigValue(null));
+    protected ItemStack CLOSE_ITEM = makeItem(Config.INTERFACE_ITEM_CLOSE.getConfigValue(null), Lang.INTERFACE_CLOSE_MENU_NAME.getConfigValue(null));
 
     //constructor for Menu. Pass in a PlayerMenuUtility so that
     public Menu(PlayerMenuUtility playerMenuUtility) {
