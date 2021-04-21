@@ -18,7 +18,7 @@ import java.util.logging.Level;
 public class OneStopShop extends JavaPlugin {
 
     @Getter private Data data;
-    @Getter private PluginUtility pluginUtility;
+    @Getter private PU pU;
     @Getter private FileManager fileManager;
     @Getter private Economy economy;
     @Getter private OneStopShopAPI api;
@@ -29,7 +29,7 @@ public class OneStopShop extends JavaPlugin {
         //object classes
         this.data = new Data();
         this.fileManager = new FileManager();
-        this.pluginUtility = new PluginUtility();
+        this.pU = new PU();
         this.api = new OneStopShopAPI();
 
         //file manager for configs
@@ -51,7 +51,7 @@ public class OneStopShop extends JavaPlugin {
         //load vault economy
         if (Settings.BOOLEAN_ECONOMY_VAULT.getConfigValue()) {
             if (!setupEconomy()) {
-                Bukkit.getLogger().log(Level.SEVERE, "[OneStopShop] Vault is enabled in the config but is not installed or being handled, plugin disabled.");
+                Bukkit.getLogger().log(Level.SEVERE, "[OneStopShop] Vault is enabled in the config but is not being handled, plugin disabled.");
                 getServer().getPluginManager().disablePlugin(this);
             }
         }

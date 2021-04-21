@@ -25,7 +25,7 @@ public class ShopMenu extends PaginatedMenu {
         OneStopShop plugin = OneStopShop.getPlugin();
         String menu = playerMenuUtility.getCurrentMenu();
         String shopTitle = plugin.getData().getDataMenuUtil(menu).getShopTitle(playerMenuUtility.getShop());
-        return Lang.INTERFACE_SHOP_MENU_TITLE.getConfigValue(new String [] { plugin.getPluginUtility().format(shopTitle), String.valueOf(page + 1) });
+        return Lang.INTERFACE_SHOP_MENU_TITLE.getConfigValue(new String [] { plugin.getPU().format(shopTitle), String.valueOf(page + 1) });
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ShopMenu extends PaginatedMenu {
 
         //click delay
         if (plugin.getData().getPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId())) return;
-        else plugin.getPluginUtility().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
+        else plugin.getPU().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
 
         ItemStack item = e.getCurrentItem();
 
@@ -59,7 +59,7 @@ public class ShopMenu extends PaginatedMenu {
         //close inventory
         if (item.equals(BACK_ITEM)) {
             new MainMenu(playerMenuUtility).openMenu(playerMenuUtility.getCurrentMenu());
-            plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+            plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
             return;
 
         }
@@ -71,7 +71,7 @@ public class ShopMenu extends PaginatedMenu {
             } else {
                 page = page - 1;
                 super.open();
-                plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
                 return;
             }
             return;
@@ -83,7 +83,7 @@ public class ShopMenu extends PaginatedMenu {
             if (!((index + 1) >= items.size())) {
                 page = page + 1;
                 super.open();
-                plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
             } else {
                 p.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_NEXT_PAGE.getConfigValue(null));
                 return;
@@ -95,7 +95,7 @@ public class ShopMenu extends PaginatedMenu {
         if (plugin.getData().getDataShopUtil().getItemCommand(item) != null) {
             playerMenuUtility.setSelectedShopItem(e.getCurrentItem());
             new CMDTransactionMenu(playerMenuUtility).open();
-            plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+            plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
             return;
         }
 
@@ -105,7 +105,7 @@ public class ShopMenu extends PaginatedMenu {
             if (savedItem.equals(e.getCurrentItem())) {
                 playerMenuUtility.setSelectedShopItem(savedItem);
                 new TransactionMenu(playerMenuUtility).open();
-                plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
                 return;
             }
         }

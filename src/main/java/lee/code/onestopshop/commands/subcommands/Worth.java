@@ -34,16 +34,16 @@ public class Worth extends SubCommand {
     public void perform(Player player, String[] args) {
 
         OneStopShop plugin = OneStopShop.getPlugin();
-        ItemStack item = plugin.getPluginUtility().getHandItem(player);
-        String itemString = plugin.getPluginUtility().formatMatFriendly(item);
+        ItemStack item = plugin.getPU().getHandItem(player);
+        String itemString = plugin.getPU().formatMatFriendly(item);
 
         if (plugin.getData().getDataShopUtil().getSellValue(item) != 0.0) {
             double worth = plugin.getData().getDataShopUtil().getSellValue(item);
-            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_WORTH.getConfigValue(new String [] { itemString, plugin.getPluginUtility().formatValue(worth) }));
+            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_WORTH.getConfigValue(new String [] { itemString, plugin.getPU().formatValue(worth) }));
 
         } else {
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_SELL_ITEM_NO_VALUE.getConfigValue(new String [] { itemString }));
-            plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+            plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
         }
     }
 

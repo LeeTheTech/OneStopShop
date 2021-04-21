@@ -42,9 +42,9 @@ public class SpawnerListener implements Listener {
             Enchantment silk = XEnchantment.SILK_TOUCH.parseEnchantment();
             boolean hasItemInHand = false;
 
-            handItem = plugin.getPluginUtility().getHandItem(player);
+            handItem = plugin.getPU().getHandItem(player);
 
-            String itemID = plugin.getPluginUtility().formatMat(handItem);
+            String itemID = plugin.getPU().formatMat(handItem);
 
             if (!handItem.getType().equals(Material.AIR)) hasItemInHand = true;
             if (!player.hasPermission("oss.spawner.break")) {
@@ -93,7 +93,7 @@ public class SpawnerListener implements Listener {
             //check if spawner and right-click
             if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK) && e.getClickedBlock().getType().equals(XMaterial.SPAWNER.parseMaterial())) {
 
-                ItemStack item = plugin.getPluginUtility().getHandItem(e.getPlayer());
+                ItemStack item = plugin.getPU().getHandItem(e.getPlayer());
 
                 //check if player is holding spawner so they can place it on it
                 e.setCancelled(!item.getType().equals(XMaterial.SPAWNER.parseMaterial()));

@@ -7,7 +7,6 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BlockStateMeta;
 
-
 public class SpawnerBuilder {
 
     private EntityType mob;
@@ -24,16 +23,20 @@ public class SpawnerBuilder {
     public ItemStack buildItemStack() {
         ItemStack item = XMaterial.SPAWNER.parseItem();
 
-        BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
-        CreatureSpawner cs = (CreatureSpawner) meta.getBlockState();
+        if (item != null) {
+            BlockStateMeta meta = (BlockStateMeta) item.getItemMeta();
+            if (meta != null) {
+                CreatureSpawner cs = (CreatureSpawner) meta.getBlockState();
 
-        cs.setSpawnedType(mob);
-        meta.setBlockState(cs);
+                cs.setSpawnedType(mob);
+                meta.setBlockState(cs);
 
-        String name = mob.toString();
-        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
-        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&f" + name.replace("_", " ") + " Spawner"));
-        item.setItemMeta(meta);
+                String name = mob.toString();
+                name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+                meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&f" + name.replace("_", " ") + " Spawner"));
+                item.setItemMeta(meta);
+            }
+        }
 
         return item;
     }

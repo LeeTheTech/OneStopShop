@@ -7,16 +7,12 @@ import lee.code.onestopshop.files.defaults.Config;
 import lee.code.onestopshop.files.defaults.Lang;
 import lee.code.onestopshop.OneStopShop;
 import lee.code.onestopshop.xseries.XMaterial;
-import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class RemoveItem extends SubCommand {
 
@@ -53,7 +49,7 @@ public class RemoveItem extends SubCommand {
         if (args.length > 1) {
 
             boolean hasItemInHand = false;
-            ItemStack item = plugin.getPluginUtility().getHandItem(player);
+            ItemStack item = plugin.getPU().getHandItem(player);
 
             //shop check
             String shop;
@@ -64,13 +60,15 @@ public class RemoveItem extends SubCommand {
                 return;
             }
 
-            String friendlyString = plugin.getPluginUtility().formatMatFriendly(item);
+            String friendlyString = plugin.getPU().formatMatFriendly(item);
 
             if (item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {
-                String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
-                if (!plugin.getData().getDataShopUtil().getSkullSkin(shop).contains(skullSkin)) {
-                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_REMOVE_ITEM_NOT_FOUND.getConfigValue(new String[]{friendlyString, shop}));
-                    return;
+                if (item.getItemMeta() != null) {
+                    String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
+                    if (!plugin.getData().getDataShopUtil().getSkullSkin(shop).contains(skullSkin)) {
+                        player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_REMOVE_ITEM_NOT_FOUND.getConfigValue(new String[]{friendlyString, shop}));
+                        return;
+                    }
                 }
             } else if (!plugin.getData().getDataShopUtil().getShopItems(shop).contains(item)) {
                 player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_REMOVE_ITEM_NOT_FOUND.getConfigValue(new String[]{friendlyString, shop}));
@@ -81,34 +79,35 @@ public class RemoveItem extends SubCommand {
             if (!item.getType().equals(Material.AIR)) hasItemInHand = true;
 
             if (hasItemInHand) {
-
                 FileConfiguration file = plugin.getFile("shops").getData();
-
                 if (file.contains("shops")) {
-                    for (String key : file.getConfigurationSection("shops." + shop + ".items").getKeys(false)) {
-                        ConfigurationSection section = file.getConfigurationSection("shops." + shop + ".items." + key);
-                        String savedSkullSkin = file.getString("shops." + shop + ".items." + key + ".skull");
-                        ItemStack savedItem = XItemStack.deserialize(section);
+                    ConfigurationSection config = file.getConfigurationSection("shops." + shop + ".items");
+                    if (config != null) {
+                        for (String key : config.getKeys(false)) {
+                            ConfigurationSection section = file.getConfigurationSection("shops." + shop + ".items." + key);
+                            if (section != null) {
+                                String savedSkullSkin = file.getString("shops." + shop + ".items." + key + ".skull");
+                                ItemStack savedItem = XItemStack.deserialize(section);
 
-                        //friendly item string
-                        if (item.equals(savedItem) || savedSkullSkin != null) {
-                            if (savedSkullSkin != null) {
-                                String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
-                                if (!savedSkullSkin.equals(skullSkin)) continue;
+                                //friendly item string
+                                if (item.equals(savedItem) || savedSkullSkin != null) {
+                                    if (savedSkullSkin != null && item.getItemMeta() != null) {
+                                        String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
+                                        if (!savedSkullSkin.equals(skullSkin)) continue;
+                                    }
+                                    file.set("shops." + shop + ".items." + key, null);
+                                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_REMOVE_SUCCESSFUL.getConfigValue(new String[]{friendlyString, shop}));
+                                    plugin.saveFile("shops");
+                                    plugin.getData().loadData();
+                                    plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
+                                    return;
+                                }
                             }
-                            file.set("shops." + shop + ".items." + key, null);
-                            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_REMOVE_SUCCESSFUL.getConfigValue(new String[]{friendlyString, shop}));
-                            plugin.saveFile("shops");
-                            plugin.getData().loadData();
-                            plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
-                            return;
                         }
+                        System.out.println("Did not find saved item.");
                     }
-                    System.out.println("Did not find saved item.");
                 }
-            } else {
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_REMOVE_NO_ITEM.getConfigValue(null));
-            }
+            } else player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_REMOVE_NO_ITEM.getConfigValue(null));
         }
     }
 

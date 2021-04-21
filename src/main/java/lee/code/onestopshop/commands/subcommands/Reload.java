@@ -37,7 +37,7 @@ public class Reload extends SubCommand {
         plugin.loadDefaults();
         plugin.getData().loadData();
         player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_RELOAD.getConfigValue(null));
-        plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
+        plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
     }
 
     @Override

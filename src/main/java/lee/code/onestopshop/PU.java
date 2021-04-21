@@ -17,7 +17,7 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.Level;
 
-public class PluginUtility {
+public class PU {
 
     //color formatting string
     public String format(String format) {
@@ -38,7 +38,7 @@ public class PluginUtility {
 
     //formats item from XMat as Item Name
     public String formatMatFriendly(ItemStack item) {
-        if (item.hasItemMeta() && item.getItemMeta().hasDisplayName()) {
+        if (item.hasItemMeta() && item.getItemMeta() != null && item.getItemMeta().hasDisplayName()) {
             String dName = item.getItemMeta().getDisplayName().replaceAll("§", "&");
             return format(dName);
         }
@@ -75,7 +75,7 @@ public class PluginUtility {
         if (item == null) return 0;
         int amount = 0;
         for (int i = 0; i < 36; i++) {
-            final ItemStack slot = player.getInventory().getItem(i);
+            ItemStack slot = player.getInventory().getItem(i);
             if (slot == null || !slot.isSimilar(item)) continue;
             amount += slot.getAmount();
         }

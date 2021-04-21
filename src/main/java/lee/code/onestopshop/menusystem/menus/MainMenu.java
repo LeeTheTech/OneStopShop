@@ -20,7 +20,7 @@ public class MainMenu extends Menu {
     public String getMenuName() {
         OneStopShop plugin = OneStopShop.getPlugin();
         String menu = playerMenuUtility.getCurrentMenu();
-        return plugin.getPluginUtility().format(plugin.getData().getDataMenuUtil(menu).getMenuTitle(menu));
+        return plugin.getPU().format(plugin.getData().getDataMenuUtil(menu).getMenuTitle(menu));
     }
 
     @Override
@@ -36,35 +36,35 @@ public class MainMenu extends Menu {
 
         //click delay
         if (plugin.getData().getPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId())) return;
-        else plugin.getPluginUtility().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
+        else plugin.getPU().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
 
         //return if players inventory
         if (e.getClickedInventory() == playerMenuUtility.getOwner().getInventory()) return;
 
         ItemStack item = e.getCurrentItem();
 
-        if (item.equals(FILLER_GLASS)) return;
+        if (item != null && !item.equals(FILLER_GLASS)) {
+            String menu = playerMenuUtility.getCurrentMenu();
 
-        String menu = playerMenuUtility.getCurrentMenu();
+            //back button
+            if (item.equals(BACK_ITEM)) {
+                playerMenuUtility.setCurrentMenu(plugin.getData().getMainMenu());
+                new MainMenu(playerMenuUtility).openMenu(plugin.getData().getMainMenu());
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                return;
+            }
 
-        //back button
-        if (item.equals(BACK_ITEM)) {
-            playerMenuUtility.setCurrentMenu(plugin.getData().getMainMenu());
-            new MainMenu(playerMenuUtility).openMenu(plugin.getData().getMainMenu());
-            plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
-            return;
+            //opens menu or sub menu
+            if (plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item) != null) {
+                String subMenu = plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item);
+                playerMenuUtility.setCurrentMenu(subMenu);
+                new MainMenu(playerMenuUtility).openMenu(subMenu);
+            } else {
+                playerMenuUtility.setShop(plugin.getData().getDataMenuUtil(menu).getShop(item));
+                new ShopMenu(playerMenuUtility).open();
+            }
+            plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
         }
-
-        //opens menu or sub menu
-        if (plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item) != null) {
-            String subMenu = plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item);
-            playerMenuUtility.setCurrentMenu(subMenu);
-            new MainMenu(playerMenuUtility).openMenu(subMenu);
-        } else {
-            playerMenuUtility.setShop(plugin.getData().getDataMenuUtil(menu).getShop(item));
-            new ShopMenu(playerMenuUtility).open();
-        }
-        plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
     }
 
     @Override
@@ -73,14 +73,9 @@ public class MainMenu extends Menu {
         playerMenuUtility.setCurrentMenu(menu);
 
         if (Settings.INTERFACE_BOOLEAN_MENU_FILLER_GLASS.getConfigValue()) setFillerGlass();
-
         int maxSize = plugin.getData().getDataMenuUtil(menu).getMenuSize(menu);
-
-        //checks if it's not main menu and adds back button
         if (!menu.equals(plugin.getData().getMainMenu()) && maxSize > 9) inventory.setItem(maxSize - 5, BACK_ITEM);
-
         ArrayList<ItemStack> items = new ArrayList<>(plugin.getData().getDataMenuUtil(menu).getMenuItems());
-
         for (ItemStack item : items) inventory.setItem(plugin.getData().getDataMenuUtil(menu).getMenuItemSlot(item), item);
     }
 }

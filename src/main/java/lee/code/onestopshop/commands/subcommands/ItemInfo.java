@@ -36,10 +36,10 @@ public class ItemInfo extends SubCommand {
 
         if (args.length > 0) {
 
-            ItemStack item = plugin.getPluginUtility().getHandItem(player);
+            ItemStack item = plugin.getPU().getHandItem(player);
 
-            String itemString = plugin.getPluginUtility().formatMatFriendly(item);
-            String itemID = plugin.getPluginUtility().formatMat(item);
+            String itemString = plugin.getPU().formatMatFriendly(item);
+            String itemID = plugin.getPU().formatMat(item);
 
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_ITEM_INFO.getConfigValue(new String[]{itemString, itemID}));
         }

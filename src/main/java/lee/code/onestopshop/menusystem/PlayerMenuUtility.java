@@ -9,14 +9,13 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
-@Getter
 @RequiredArgsConstructor
 public class PlayerMenuUtility {
     private final UUID owner;
 
-    @Setter private String shop;
-    @Setter private ItemStack selectedShopItem;
-    @Setter private String currentMenu;
+    @Getter @Setter private String shop;
+    @Getter @Setter private ItemStack selectedShopItem;
+    @Getter @Setter private String currentMenu;
 
     public Player getOwner() {
         return Bukkit.getPlayer(owner);

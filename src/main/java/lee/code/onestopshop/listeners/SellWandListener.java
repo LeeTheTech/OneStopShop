@@ -35,9 +35,7 @@ public class SellWandListener implements Listener {
         double totalValue = 0.0;
 
         for (ItemStack item : getItems(e.getContainer())) {
-
             if (item != null) {
-
                 ItemStack copy = new ItemStack(item);
                 copy.setAmount(1);
 
@@ -49,14 +47,14 @@ public class SellWandListener implements Listener {
 
                     if (itemEconomyEnabled) {
                         ItemStack economyItem = new ItemStack(plugin.getData().getDataShopUtil().getEconomyItem());
-                        if (plugin.getPluginUtility().getAmountOfFreeSpace(player, economyItem) < (int) stackValue) {
+                        if (plugin.getPU().getAmountOfFreeSpace(player, economyItem) < (int) stackValue) {
 
                             if ((int) totalValue == 0) {
                                 player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_TRANSACTION_ECONOMY_ITEM_SPACE.getConfigValue(null));
-                                plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+                                plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
                             } else {
-                                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SELL_WAND_NO_SPACE_ITEM_PAYMENT.getConfigValue(new String[] { plugin.getPluginUtility().formatAmount(totalAmount), plugin.getPluginUtility().formatValue(totalValue) }));
-                                plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
+                                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SELL_WAND_NO_SPACE_ITEM_PAYMENT.getConfigValue(new String[] { plugin.getPU().formatAmount(totalAmount), plugin.getPU().formatValue(totalValue) }));
+                                plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
                             }
                             return;
                         }
@@ -77,11 +75,11 @@ public class SellWandListener implements Listener {
         }
         if (totalValue != 0.0) {
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_SELL_WAND_SUCCESSFUL.getConfigValue(new String[] {
-                    plugin.getPluginUtility().formatAmount(totalAmount), plugin.getPluginUtility().formatValue(totalValue) }));
-            plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
+                    plugin.getPU().formatAmount(totalAmount), plugin.getPU().formatValue(totalValue) }));
+            plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
         } else {
             player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SELL_WAND_NO_VALUE.getConfigValue(null));
-            plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
+            plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_FAILED.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_FAILED.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_FAILED.getConfigValue(null)));
         }
     }
 

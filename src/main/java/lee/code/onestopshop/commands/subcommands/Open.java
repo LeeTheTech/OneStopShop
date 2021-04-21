@@ -76,7 +76,7 @@ public class Open extends SubCommand  {
                 plugin.getData().getPlayerMenuUtil(player.getUniqueId()).setCurrentMenu(menu);
                 new MainMenu(plugin.getData().getPlayerMenuUtil(player.getUniqueId())).openMenu(menu);
             }
-            plugin.getPluginUtility().playXSound(player, Config.SOUND_MENU_OPEN.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_OPEN.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_OPEN.getConfigValue(null)));
+            plugin.getPU().playXSound(player, Config.SOUND_MENU_OPEN.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_OPEN.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_OPEN.getConfigValue(null)));
         }
     }
 

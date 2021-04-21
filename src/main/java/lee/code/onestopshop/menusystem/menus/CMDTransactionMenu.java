@@ -23,8 +23,8 @@ public class CMDTransactionMenu extends PaginatedMenu {
     public String getMenuName() {
         OneStopShop plugin = OneStopShop.getPlugin();
         ItemStack item = playerMenuUtility.getSelectedShopItem();
-        String mat = plugin.getPluginUtility().formatMatFriendly(item);
-        return Lang.INTERFACE_TRANSACTION_MENU_TITLE.getConfigValue(new String[]{ plugin.getPluginUtility().format( mat )});
+        String mat = plugin.getPU().formatMatFriendly(item);
+        return Lang.INTERFACE_TRANSACTION_MENU_TITLE.getConfigValue(new String[]{ plugin.getPU().format( mat )});
     }
 
     @Override
@@ -38,7 +38,7 @@ public class CMDTransactionMenu extends PaginatedMenu {
 
         //click delay
         if (plugin.getData().getPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId())) return;
-        else plugin.getPluginUtility().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
+        else plugin.getPU().addPlayerClickDelay(playerMenuUtility.getOwner().getUniqueId());
 
         Player player = playerMenuUtility.getOwner();
 
@@ -50,17 +50,17 @@ public class CMDTransactionMenu extends PaginatedMenu {
         switch (e.getSlot()) {
             //buy 1
             case 31:
-                plugin.getPluginUtility().givePlayerItems(player, item, 1);
+                plugin.getPU().givePlayerItems(player, item, 1);
                 break;
             //back
             case 38:
                 new ShopMenu(playerMenuUtility).open();
-                plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
                 break;
             //close
             case 42:
                 player.closeInventory();
-                plugin.getPluginUtility().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
+                plugin.getPU().playXSound(playerMenuUtility.getOwner(), Config.SOUND_MENU_CLICK.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_CLICK.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_CLICK.getConfigValue(null)));
                 break;
         }
 
@@ -73,9 +73,9 @@ public class CMDTransactionMenu extends PaginatedMenu {
 
         if (Settings.INTERFACE_BOOLEAN_TRANSACTION_FILLER_GLASS.getConfigValue()) setFillerGlass();
 
-        ItemStack buyItem = plugin.getPluginUtility().createXItemStack(Config.INTERFACE_ITEM_BUY.getConfigValue(null));
-        ItemStack backItem = plugin.getPluginUtility().createXItemStack(Config.INTERFACE_ITEM_BACK.getConfigValue(null));
-        ItemStack closeItem = plugin.getPluginUtility().createXItemStack(Config.INTERFACE_ITEM_CLOSE.getConfigValue(null));
+        ItemStack buyItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BUY.getConfigValue(null));
+        ItemStack backItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_BACK.getConfigValue(null));
+        ItemStack closeItem = plugin.getPU().createXItemStack(Config.INTERFACE_ITEM_CLOSE.getConfigValue(null));
 
         ItemStack selectedItem = new ItemStack(playerMenuUtility.getSelectedShopItem());
 
@@ -92,7 +92,7 @@ public class CMDTransactionMenu extends PaginatedMenu {
         ArrayList<String> buyItemLore = new ArrayList<>();
 
         buyItemLore.add(Lang.INTERFACE_BUY_LORE_1.getConfigValue(new String [] { String.valueOf(1) }));
-        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPluginUtility().formatValue(buyItemValue) }));
+        buyItemLore.add(Lang.INTERFACE_BUY_LORE_2.getConfigValue(new String [] { plugin.getPU().formatValue(buyItemValue) }));
 
         buyItemMeta.setLore(buyItemLore);
         buyItem.setItemMeta(buyItemMeta);

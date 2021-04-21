@@ -2,14 +2,13 @@ package lee.code.onestopshop.commands.subcommands;
 
 import lee.code.onestopshop.commands.SubCommand;
 import lee.code.onestopshop.files.defaults.Lang;
-import lee.code.onestopshop.itembuilders.SellWandBuilder;
 import lee.code.onestopshop.OneStopShop;
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class SellWand extends SubCommand {
@@ -51,11 +50,9 @@ public class SellWand extends SubCommand {
                 return;
             }
 
-            //check if player is online and if a target was given
+            //check for target player
             if (args.length >= 3) {
-
-                if (plugin.getPluginUtility().getOnlinePlayers().contains(args[2])) {
-                    //target player
+                if (plugin.getPU().getOnlinePlayers().contains(args[2])) {
                     target = Bukkit.getPlayer(args[2]);
                 } else {
                     player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_PLAYER_NOT_ONLINE.getConfigValue(new String[]{args[2]}));
@@ -64,19 +61,23 @@ public class SellWand extends SubCommand {
             }
         }
 
-        ItemStack item = plugin.getData().getSellWand();
+        if (target != null) {
+            ItemStack item = plugin.getData().getSellWand();
 
-        String itemString = plugin.getPluginUtility().formatMatFriendly(item);
-        if (plugin.getPluginUtility().getAmountOfFreeSpace(target, item) > 0) {
-            item.setAmount(amount);
-            target.getInventory().addItem(item);
+            String itemString = plugin.getPU().formatMatFriendly(item);
+            if (plugin.getPU().getAmountOfFreeSpace(target, item) > 0) {
+                item.setAmount(amount);
+                target.getInventory().addItem(item);
+            } else {
+                World world = target.getLocation().getWorld();
+                if (world != null) world.dropItemNaturally(target.getLocation(), item);
+            }
 
-        } else target.getLocation().getWorld().dropItemNaturally(target.getLocation(), item);
+            target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GIVEN_SUCCESSFUL.getConfigValue(new String[] { plugin.getPU().formatAmount(amount), itemString }));
 
-        target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GIVEN_SUCCESSFUL.getConfigValue(new String[] { plugin.getPluginUtility().formatAmount(amount), itemString }));
-
-        if (player != target) {
-            player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GAVE_SUCCESSFUL.getConfigValue(new String[] { target.getDisplayName(), plugin.getPluginUtility().formatAmount(amount), itemString }));
+            if (player != target) {
+                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GAVE_SUCCESSFUL.getConfigValue(new String[] { target.getDisplayName(), plugin.getPU().formatAmount(amount), itemString }));
+            }
         }
     }
 
@@ -94,7 +95,6 @@ public class SellWand extends SubCommand {
         }
 
         if (args.length > 1) {
-
             Scanner buyScanner = new Scanner(args[1]);
             if (buyScanner.hasNextInt()) {
                 amount = Integer.parseInt(args[1]);
@@ -105,9 +105,7 @@ public class SellWand extends SubCommand {
 
             //check if player is online and if a target was given
             if (args.length >= 3) {
-
-                if (plugin.getPluginUtility().getOnlinePlayers().contains(args[2])) {
-                    //target player
+                if (plugin.getPU().getOnlinePlayers().contains(args[2])) {
                     target = Bukkit.getPlayer(args[2]);
                 } else {
                     console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_PLAYER_NOT_ONLINE.getConfigValue(new String[]{args[2]}));
@@ -118,17 +116,20 @@ public class SellWand extends SubCommand {
                 return;
             }
 
-            ItemStack item = plugin.getData().getSellWand();
+            if (target != null) {
+                ItemStack item = plugin.getData().getSellWand();
 
-            String itemString = plugin.getPluginUtility().formatMatFriendly(item);
-            if (plugin.getPluginUtility().getAmountOfFreeSpace(target, item) > 0) {
-                item.setAmount(amount);
-                target.getInventory().addItem(item);
-            } else {
-                target.getLocation().getWorld().dropItemNaturally(target.getLocation(), item);
+                String itemString = plugin.getPU().formatMatFriendly(item);
+                if (plugin.getPU().getAmountOfFreeSpace(target, item) > 0) {
+                    item.setAmount(amount);
+                    target.getInventory().addItem(item);
+                } else {
+                    World world = target.getLocation().getWorld();
+                    if (world != null) world.dropItemNaturally(target.getLocation(), item);
+                }
+                console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GAVE_SUCCESSFUL.getConfigValue(new String[] { target.getDisplayName(), plugin.getPU().formatAmount(amount), itemString }));
+                target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GIVEN_SUCCESSFUL.getConfigValue(new String[] { plugin.getPU().formatAmount(amount), itemString }));
             }
-            console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GAVE_SUCCESSFUL.getConfigValue(new String[] { target.getDisplayName(), plugin.getPluginUtility().formatAmount(amount), itemString }));
-            target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_COMMAND_SELL_WAND_GIVEN_SUCCESSFUL.getConfigValue(new String[] { plugin.getPluginUtility().formatAmount(amount), itemString }));
         }
     }
 }

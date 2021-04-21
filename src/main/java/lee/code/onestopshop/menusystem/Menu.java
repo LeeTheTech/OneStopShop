@@ -87,13 +87,15 @@ public abstract class Menu implements InventoryHolder {
         if (XMaterial.matchXMaterial(string).isPresent()) {
             if (XMaterial.matchXMaterial(string).get().isSupported()) {
                 ItemStack item = XMaterial.valueOf(string).parseItem();
-                ItemMeta itemMeta = item.getItemMeta();
-                itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
-
-                itemMeta.setLore(Arrays.asList(lore));
-                item.setItemMeta(itemMeta);
+                if (item != null) {
+                    ItemMeta itemMeta = item.getItemMeta();
+                    if (itemMeta != null) {
+                        itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName));
+                        itemMeta.setLore(Arrays.asList(lore));
+                        item.setItemMeta(itemMeta);
+                    }
+                }
                 return item;
-
             } else {
                 Bukkit.getLogger().log(Level.SEVERE,"[OneStopShop] The item " + string + " is not supported on your server version, you need to fix this in your config.yml.");
                 return XMaterial.WHITE_STAINED_GLASS_PANE.parseItem();

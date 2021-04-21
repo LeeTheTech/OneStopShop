@@ -63,7 +63,7 @@ public class Spawner extends SubCommand {
             //check if player is online and if a target was given
             if (args.length >= 4) {
 
-                if (plugin.getPluginUtility().getOnlinePlayers().contains(args[3])) {
+                if (plugin.getPU().getOnlinePlayers().contains(args[3])) {
                     //target player
                     target = Bukkit.getPlayer(args[3]);
                 } else {
@@ -80,16 +80,16 @@ public class Spawner extends SubCommand {
                 spawner.setAmount(amount);
 
                 //space check
-                if (plugin.getPluginUtility().getAmountOfFreeSpace(target, spawner) > 0) {
+                if (plugin.getPU().getAmountOfFreeSpace(target, spawner) > 0) {
                     target.getInventory().addItem(spawner);
                 } else {
                     target.getLocation().getWorld().dropItemNaturally(target.getLocation(), spawner);
                 }
-                String itemString = plugin.getPluginUtility().formatMatFriendly(spawner);
-                target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GIVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{plugin.getPluginUtility().formatAmount(amount), itemString}));
+                String itemString = plugin.getPU().formatMatFriendly(spawner);
+                target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GIVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{plugin.getPU().formatAmount(amount), itemString}));
 
                 if (target != player) {
-                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GAVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{target.getDisplayName(), plugin.getPluginUtility().formatAmount(amount), itemString}));
+                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GAVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{target.getDisplayName(), plugin.getPU().formatAmount(amount), itemString}));
                 }
             } else {
                 player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_SPAWNER_DOES_NOT_EXIST.getConfigValue(new String[]{args[1].toUpperCase()}));
@@ -127,7 +127,7 @@ public class Spawner extends SubCommand {
             //check if player is online and if a target was given
             if (args.length >= 4) {
 
-                if (plugin.getPluginUtility().getOnlinePlayers().contains(args[3])) {
+                if (plugin.getPU().getOnlinePlayers().contains(args[3])) {
                     //target player
                     target = Bukkit.getPlayer(args[3]);
                 } else {
@@ -147,15 +147,15 @@ public class Spawner extends SubCommand {
                 spawner.setAmount(amount);
 
                 //space check
-                if (plugin.getPluginUtility().getAmountOfFreeSpace(target, spawner) > 0) {
+                if (plugin.getPU().getAmountOfFreeSpace(target, spawner) > 0) {
                     target.getInventory().addItem(spawner);
                 } else {
                     target.getLocation().getWorld().dropItemNaturally(target.getLocation(), spawner);
                 }
-                String itemString = plugin.getPluginUtility().formatMatFriendly(spawner);
-                target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GIVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{plugin.getPluginUtility().formatAmount(amount), itemString}));
+                String itemString = plugin.getPU().formatMatFriendly(spawner);
+                target.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GIVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{plugin.getPU().formatAmount(amount), itemString}));
 
-                console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GAVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{target.getDisplayName(), plugin.getPluginUtility().formatAmount(amount), itemString}));
+                console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_GAVE_SPAWNER_SUCCESSFUL.getConfigValue(new String[]{target.getDisplayName(), plugin.getPU().formatAmount(amount), itemString}));
             } else {
                 console.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_SPAWNER_DOES_NOT_EXIST.getConfigValue(new String[]{args[1].toUpperCase()}));
             }

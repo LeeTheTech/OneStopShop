@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import lombok.RequiredArgsConstructor;
+
+import javax.annotation.Nonnull;
 import java.util.Collections;
 
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class TabCompletion implements TabCompleter {
     private final List<String> blank = new ArrayList<>();
 
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String alias, @Nonnull String[] args) {
         OneStopShop plugin = OneStopShop.getPlugin();
 
         if (sender instanceof Player) {
@@ -42,10 +44,10 @@ public class TabCompletion implements TabCompleter {
             } else if (args[0].equals("spawner")) {
                 if (args.length == 2) return StringUtil.copyPartialMatches(args[1], plugin.getData().getSpawnerMobs(), new ArrayList<>());
                 else if (args.length == 3) return StringUtil.copyPartialMatches(args[2], Collections.singletonList("<amount>"), new ArrayList<>());
-                else if (args.length == 4) return StringUtil.copyPartialMatches(args[3], plugin.getPluginUtility().getOnlinePlayers(), new ArrayList<>());
+                else if (args.length == 4) return StringUtil.copyPartialMatches(args[3], plugin.getPU().getOnlinePlayers(), new ArrayList<>());
             } else if (args[0].equals("sellwand")) {
                 if (args.length == 2) return StringUtil.copyPartialMatches(args[1], Collections.singletonList("<amount>"), new ArrayList<>());
-                else if (args.length == 3) return StringUtil.copyPartialMatches(args[2], plugin.getPluginUtility().getOnlinePlayers(), new ArrayList<>());
+                else if (args.length == 3) return StringUtil.copyPartialMatches(args[2], plugin.getPU().getOnlinePlayers(), new ArrayList<>());
             }
         }
 

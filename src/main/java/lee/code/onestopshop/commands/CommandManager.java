@@ -11,6 +11,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import lombok.Getter;
 
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class CommandManager implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(@Nonnull CommandSender sender, @Nonnull Command command, @Nonnull String label, @Nonnull String[] args) {
 
         OneStopShop plugin = OneStopShop.getPlugin();
 
@@ -70,14 +71,14 @@ public class CommandManager implements CommandExecutor {
                 lines.add("&r");
                 lines.add(Lang.MESSAGE_HELP_DIVIDER.getConfigValue(null));
 
-                for (String line : lines) p.sendMessage(plugin.getPluginUtility().format(line));
-                return true;
+                for (String line : lines) p.sendMessage(plugin.getPU().format(line));
 
             } else {
                 plugin.getData().getPlayerMenuUtil(p.getUniqueId()).setCurrentMenu(plugin.getData().getMainMenu());
                 new MainMenu(plugin.getData().getPlayerMenuUtil(p.getUniqueId())).openMenu(plugin.getData().getMainMenu());
-                plugin.getPluginUtility().playXSound(p, Config.SOUND_MENU_OPEN.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_OPEN.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_OPEN.getConfigValue(null)));
+                plugin.getPU().playXSound(p, Config.SOUND_MENU_OPEN.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_MENU_OPEN.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_MENU_OPEN.getConfigValue(null)));
             }
+            return true;
         }
         //console command
         if (args.length > 0) {

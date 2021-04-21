@@ -90,17 +90,19 @@ public class AddItem extends SubCommand {
 
             boolean hasItemInHand = false;
 
-            ItemStack item = plugin.getPluginUtility().getHandItem(player);
+            ItemStack item = plugin.getPU().getHandItem(player);
 
             //check if the item is saved
             if (plugin.getData().getDataShopUtil().getShopItems(shop).contains(item)) {
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SHOP_ITEM_ADD_FAILED.getConfigValue(new String [] { plugin.getPluginUtility().formatMatFriendly(item), shop }));
+                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SHOP_ITEM_ADD_FAILED.getConfigValue(new String [] { plugin.getPU().formatMatFriendly(item), shop }));
                 return;
             } else if (item.getType() == XMaterial.PLAYER_HEAD.parseMaterial()) {
-                String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
-                if (plugin.getData().getDataShopUtil().getSkullSkin(shop).contains(skullSkin)) {
-                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SHOP_ITEM_ADD_FAILED.getConfigValue(new String [] { plugin.getPluginUtility().formatMatFriendly(item), shop }));
-                    return;
+                if (item.getItemMeta() != null) {
+                    String skullSkin = SkullUtils.getSkinValue(item.getItemMeta());
+                    if (plugin.getData().getDataShopUtil().getSkullSkin(shop).contains(skullSkin)) {
+                        player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_SHOP_ITEM_ADD_FAILED.getConfigValue(new String [] { plugin.getPU().formatMatFriendly(item), shop }));
+                        return;
+                    }
                 }
             }
 
@@ -111,14 +113,17 @@ public class AddItem extends SubCommand {
                 FileConfiguration file = plugin.getFile("shops").getData();
 
                 //format friendly mat to Item Name
-                String itemString = plugin.getPluginUtility().formatMatFriendly(item);
+                String itemString = plugin.getPU().formatMatFriendly(item);
 
                 //key for item in file
                 int var = 1;
                 List<String> number = new ArrayList<>();
 
                 //get all item keys
-                if (file.contains("shops")) number.addAll(file.getConfigurationSection("shops." + shop + ".items").getKeys(false));
+                if (file.contains("shops")) {
+                    ConfigurationSection config = file.getConfigurationSection("shops." + shop + ".items");
+                    if (config != null) number.addAll(config.getKeys(false));
+                }
 
                 //system for making sure a key is never used two times
                 if (number.contains(String.valueOf(var))) {
@@ -132,17 +137,15 @@ public class AddItem extends SubCommand {
                 file.set("shops." + shop + ".items." + var + ".sell", sell);
 
                 ConfigurationSection section = file.getConfigurationSection("shops." + shop + ".items." + var);
-                XItemStack.serialize(item, section);
+                if (section != null) {
+                    XItemStack.serialize(item, section);
 
-                plugin.saveFile("shops");
-                plugin.getData().loadData();
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_SHOP_ITEM_ADDED_SUCCESSFUL.getConfigValue(new String[]{itemString, shop}));
-                plugin.getPluginUtility().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
-
-            } else {
-                //player is not holding item
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_ADD_NO_ITEM.getConfigValue(null));
-            }
+                    plugin.saveFile("shops");
+                    plugin.getData().loadData();
+                    player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.MESSAGE_SHOP_ITEM_ADDED_SUCCESSFUL.getConfigValue(new String[]{itemString, shop}));
+                    plugin.getPU().playXSound(player, Config.SOUND_TRANSACTION_SUCCESSFUL.getConfigValue(null), Double.parseDouble(Config.SOUND_VOLUME_TRANSACTION_SUCCESSFUL.getConfigValue(null)), Double.parseDouble(Config.SOUND_PITCH_TRANSACTION_SUCCESSFUL.getConfigValue(null)));
+                }
+            } else player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_COMMAND_ADD_NO_ITEM.getConfigValue(null));
         }
     }
 
