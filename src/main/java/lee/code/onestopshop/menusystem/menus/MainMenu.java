@@ -54,7 +54,7 @@ public class MainMenu extends Menu {
                 String subMenu = plugin.getData().getDataMenuUtil(menu).getItemSubMenu(item);
                 playerMenuUtility.setCurrentMenu(subMenu);
                 new MainMenu(playerMenuUtility).openMenu(subMenu);
-            } else {
+            } else if (plugin.getData().getDataMenuUtil(menu).getShop(item) != null) {
                 playerMenuUtility.setShop(plugin.getData().getDataMenuUtil(menu).getShop(item));
                 new ShopMenu(playerMenuUtility).open();
             }

@@ -11,12 +11,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-
 import javax.annotation.Nonnull;
 import java.util.Collections;
 
-@RequiredArgsConstructor
 public class TabCompletion implements TabCompleter {
 
     private final List<String> subCommands = Arrays.asList("add", "remove", "reload", "iteminfo", "sell", "sellall", "worth", "open", "spawner", "sellwand");
