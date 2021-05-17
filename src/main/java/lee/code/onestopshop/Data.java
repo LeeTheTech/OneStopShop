@@ -214,7 +214,7 @@ public class Data {
 
                                     if (subMenuName != null) {
                                         getDataMenuUtil(menu).setItemSubMenu(item, subMenuName);
-                                    } else {
+                                    } else if (shop != null) {
                                         //menu item shop
                                         getDataMenuUtil(menu).setShop(item, shop);
                                         //menu item shop title
