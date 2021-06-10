@@ -26,7 +26,7 @@ public class Open extends SubCommand  {
 
     @Override
     public String getSyntax() {
-        return "/shop open <menu> <shop>";
+        return "/shop open &f<menu> <shop>";
     }
 
     @Override
