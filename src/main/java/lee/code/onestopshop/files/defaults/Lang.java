@@ -52,6 +52,7 @@ public enum Lang {
     ERROR_SELL_WAND_NO_VALUE("ERROR_SELL_WAND_NO_VALUE", "&cSadly that container did not have any items of value."),
     ERROR_SELL_WAND_NO_SPACE_ITEM_PAYMENT("ERROR_SELL_WAND_NO_SPACE_ITEM_PAYMENT", "&aYou ran out of inventory space but you sold &3{0} items &afor {1}&a! "),
     ERROR_COMMAND_OPEN_ARG_1("ERROR_COMMAND_OPEN_ARG_1", "&cYou need to input a menu and shop."),
+    ERROR_COMMAND_OPEN_CONSOLE_ARG_1("ERROR_COMMAND_OPEN_CONSOLE_ARG_1", "&cYou need to input a target player, menu and shop."),
     ERROR_SHOP_ITEM_ADD_FAILED("ERROR_SHOP_ITEM_ADD_FAILED", "&cThe item &6{0} &chas already been added to the &6{1} &cshop."),
     ERROR_TRANSACTION_BALANCE("ERROR_TRANSACTION_BALANCE", "&cSadly you only have &6{0} &cand you need &6{1} &cto buy &3{2} {3}&c."),
     ERROR_TRANSACTION_ECONOMY_ITEM_SPACE("ERROR_TRANSACTION_ECONOMY_ITEM_SPACE", "&cSadly you do not have enough inventory space to receive your payment."),
