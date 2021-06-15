@@ -127,7 +127,7 @@ public class SkullUtils {
     }
 
     @Nonnull
-    private static SkullMeta getSkullByValue(@Nonnull SkullMeta head, @Nonnull String value) {
+    public static SkullMeta getSkullByValue(@Nonnull SkullMeta head, @Nonnull String value) {
 
         Validate.notEmpty(value, "Skull value cannot be null or empty");
         GameProfile profile = new GameProfile(UUID.fromString("7cf17d83-f252-432f-8566-788adba04061"), null);
