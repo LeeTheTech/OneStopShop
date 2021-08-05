@@ -185,7 +185,9 @@ public final class XItemStack {
             LeatherArmorMeta leather = (LeatherArmorMeta) meta;
             Color color = leather.getColor();
             config.set("color", color.getRed() + ", " + color.getGreen() + ", " + color.getBlue());
+
         } else if (meta instanceof PotionMeta) {
+
             if (XMaterial.supports(9)) {
 
                 PotionMeta potion = (PotionMeta) meta;
@@ -202,7 +204,6 @@ public final class XItemStack {
                 if (potion.hasColor()) config.set("color", potion.getColor().asRGB());
 
             } else {
-
                 //check for water bottles in 1.8
                 if (item.getDurability() != 0) {
                     Potion potion = Potion.fromItemStack(item);
@@ -275,14 +276,17 @@ public final class XItemStack {
                 CrossbowMeta crossbow = (CrossbowMeta) meta;
                 int i = 0;
                 for (ItemStack projectiles : crossbow.getChargedProjectiles()) {
+                    config.set("projectiles." + i + ".material", "");
                     serialize(projectiles, config.getConfigurationSection("projectiles." + i));
                     i++;
                 }
             } else if (meta instanceof TropicalFishBucketMeta) {
                 TropicalFishBucketMeta tropical = (TropicalFishBucketMeta) meta;
-                config.set("pattern", tropical.getPattern().name());
-                config.set("color", tropical.getBodyColor().name());
-                config.set("pattern-color", tropical.getPatternColor().name());
+                if (tropical.hasVariant()) {
+                    config.set("pattern", tropical.getPattern().name());
+                    config.set("color", tropical.getBodyColor().name());
+                    config.set("pattern-color", tropical.getPatternColor().name());
+                }
             } else if (meta instanceof SuspiciousStewMeta) {
                 SuspiciousStewMeta stew = (SuspiciousStewMeta) meta;
                 List<PotionEffect> customEffects = stew.getCustomEffects();
@@ -539,13 +543,15 @@ public final class XItemStack {
                 }
             } else if (meta instanceof TropicalFishBucketMeta) {
                 TropicalFishBucketMeta tropical = (TropicalFishBucketMeta) meta;
-                DyeColor color = Enums.getIfPresent(DyeColor.class, config.getString("color")).or(DyeColor.WHITE);
-                DyeColor patternColor = Enums.getIfPresent(DyeColor.class, config.getString("pattern-color")).or(DyeColor.WHITE);
-                TropicalFish.Pattern pattern = Enums.getIfPresent(TropicalFish.Pattern.class, config.getString("pattern")).or(TropicalFish.Pattern.BETTY);
+                if (config.contains("color")) {
+                    DyeColor color = DyeColor.valueOf(config.getString("color"));
+                    DyeColor patternColor = DyeColor.valueOf(config.getString("pattern-color"));
+                    TropicalFish.Pattern pattern = TropicalFish.Pattern.valueOf(config.getString("pattern"));
 
-                tropical.setBodyColor(color);
-                tropical.setPatternColor(patternColor);
-                tropical.setPattern(pattern);
+                    tropical.setBodyColor(color);
+                    tropical.setPatternColor(patternColor);
+                    tropical.setPattern(pattern);
+                }
             }
             // Apparently Suspicious Stew was never added in 1.14
         } else if (XMaterial.supports(15)) {

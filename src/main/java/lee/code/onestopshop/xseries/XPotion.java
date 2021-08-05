@@ -237,8 +237,8 @@ public enum XPotion {
         int duration = 2400; // 20 ticks * 60 seconds * 2 minutes
         int amplifier = 0;
         if (split.length > 1) {
-            duration = NumberUtils.toInt(split[1]) * 20;
-            if (split.length > 2) amplifier = NumberUtils.toInt(split[2]) - 1;
+            duration = NumberUtils.toInt(split[1]);
+            if (split.length > 2) amplifier = NumberUtils.toInt(split[2]);
         }
 
         return new PotionEffect(type, duration, amplifier);
