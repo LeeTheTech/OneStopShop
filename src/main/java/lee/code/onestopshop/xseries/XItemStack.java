@@ -537,9 +537,12 @@ public final class XItemStack {
         } else if (XMaterial.supports(14)) {
             if (meta instanceof CrossbowMeta) {
                 CrossbowMeta crossbow = (CrossbowMeta) meta;
-                for (String projectiles : config.getConfigurationSection("projectiles").getKeys(false)) {
-                    ItemStack projectile = deserialize(config.getConfigurationSection("projectiles." + projectiles));
-                    crossbow.addChargedProjectile(projectile);
+                ConfigurationSection pConfig = config.getConfigurationSection("projectiles");
+                if (pConfig != null) {
+                    for (String projectiles : pConfig.getKeys(false)) {
+                        ItemStack projectile = deserialize(config.getConfigurationSection("projectiles." + projectiles));
+                        crossbow.addChargedProjectile(projectile);
+                    }
                 }
             } else if (meta instanceof TropicalFishBucketMeta) {
                 TropicalFishBucketMeta tropical = (TropicalFishBucketMeta) meta;

@@ -2,6 +2,7 @@ package lee.code.onestopshop.listeners;
 
 import lee.code.onestopshop.events.SpawnerBreakEvent;
 import lee.code.onestopshop.events.SpawnerExplodeEvent;
+import lee.code.onestopshop.events.SpawnerPlaceEvent;
 import lee.code.onestopshop.files.defaults.Config;
 import lee.code.onestopshop.files.defaults.Lang;
 import lee.code.onestopshop.files.defaults.Settings;
@@ -12,6 +13,7 @@ import lee.code.onestopshop.xseries.XMaterial;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
@@ -23,6 +25,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 
 import java.util.Random;
 
@@ -31,10 +34,27 @@ public class SpawnerListener implements Listener {
     private final Random random = new Random();
 
     @EventHandler
+    public void onSpawnerPlace(SpawnerPlaceEvent e) {
+        if (Settings.SPAWNER_SUPPORT.getConfigValue()) {
+            Block block = e.getSpawner();
+            Player player = e.getPlacer();
+            if (block.getState() instanceof CreatureSpawner) {
+                CreatureSpawner cs = (CreatureSpawner) block.getState();
+                ItemStack spawner = player.getInventory().getItemInMainHand();
+                BlockStateMeta spawnerMeta = (BlockStateMeta) spawner.getItemMeta();
+                if (spawnerMeta != null) {
+                    CreatureSpawner spawnerCS = (CreatureSpawner) spawnerMeta.getBlockState();
+                    cs.setSpawnedType(spawnerCS.getSpawnedType());
+                    cs.update();
+                }
+            }
+        }
+    }
+
+    @EventHandler
     public void onSpawnerBreak(SpawnerBreakEvent e) {
         OneStopShop plugin = OneStopShop.getPlugin();
 
-        //check for spawner support
         if (Settings.SPAWNER_SUPPORT.getConfigValue()) {
 
             ItemStack handItem;
@@ -44,30 +64,25 @@ public class SpawnerListener implements Listener {
             boolean hasItemInHand = false;
 
             handItem = plugin.getPU().getHandItem(player);
-            String itemID = plugin.getPU().formatMat(handItem);
             if (!handItem.getType().equals(Material.AIR)) hasItemInHand = true;
 
-            if (!player.hasPermission("oss.spawner.break")) {
-                player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_NO_PERMISSION.getConfigValue(null));
-                return;
-            }
+            if (player.hasPermission("oss.spawner.break")) {
+                if (silk != null) {
+                    if (playerGameMode.equals(GameMode.CREATIVE) || handItem.getType().equals(XMaterial.DIAMOND_PICKAXE.parseMaterial()) || handItem.getType().equals(XMaterial.NETHERITE_PICKAXE.parseMaterial())) {
+                        if (playerGameMode.equals(GameMode.CREATIVE) || hasItemInHand && handItem.containsEnchantment(silk)) {
 
-            if (silk != null) {
-                if (playerGameMode.equals(GameMode.CREATIVE) || itemID.equals("DIAMOND_PICKAXE") || itemID.equals("NETHERITE_PICKAXE")) {
-                    if (playerGameMode.equals(GameMode.CREATIVE) || hasItemInHand && handItem.containsEnchantment(silk)) {
-
-                        //Chance system
-                        int chance = random.nextInt(100) + 1;
-                        if (chance <= Integer.parseInt(Config.SPAWNER_DROP_CHANCE.getConfigValue(null))) {
-                            CreatureSpawner cs = (CreatureSpawner) e.getSpawner().getState();
-                            EntityType mob = cs.getSpawnedType();
-                            ItemStack item = new SpawnerBuilder().setMob(mob).buildItemStack();
-                            World world = e.getSpawner().getLocation().getWorld();
-                            if (world != null) world.dropItemNaturally(e.getSpawner().getLocation(), item);
+                            int chance = random.nextInt(100) + 1;
+                            if (chance <= Integer.parseInt(Config.SPAWNER_DROP_CHANCE.getConfigValue(null))) {
+                                CreatureSpawner cs = (CreatureSpawner) e.getSpawner().getState();
+                                EntityType mob = cs.getSpawnedType();
+                                ItemStack item = new SpawnerBuilder().setMob(mob).buildItemStack();
+                                World world = e.getSpawner().getLocation().getWorld();
+                                if (world != null) world.dropItemNaturally(e.getSpawner().getLocation(), item);
+                            }
                         }
                     }
                 }
-            }
+            } else player.sendMessage(Lang.PREFIX.getConfigValue(null) + Lang.ERROR_NO_PERMISSION.getConfigValue(null));
         }
     }
 

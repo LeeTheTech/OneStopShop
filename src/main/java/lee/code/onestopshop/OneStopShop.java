@@ -66,6 +66,7 @@ public class OneStopShop extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new BlockExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnerListener(), this);
         getServer().getPluginManager().registerEvents(new SellWandListener(), this);
         getServer().getPluginManager().registerEvents(new InteractListener(), this);
